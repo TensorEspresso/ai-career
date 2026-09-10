@@ -22,36 +22,56 @@
     line-height:1.55;padding:24px}
   .wrap{max-width:1240px;margin:0 auto}
   h1{font-size:26px;margin:0 0 4px}
-  .sub{color:var(--muted);font-size:14px;margin-bottom:20px}
-  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;font-size:12.5px}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:14px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;font-size:12.5px}
   .legend span{display:inline-flex;align-items:center;gap:6px;background:var(--panel);
     border:1px solid var(--line);padding:5px 10px;border-radius:20px}
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
-  .branch{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .toolbar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+  .tbtn{font:inherit;font-size:12.5px;background:var(--panel2);color:var(--text);
+    border:1px solid var(--line);border-radius:10px;padding:7px 14px;cursor:pointer;transition:.15s}
+  .tbtn:hover{border-color:var(--accent);color:var(--accent)}
+  .tbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .branch{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    display:flex;flex-direction:column;align-self:start}
   .branch header{padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;
-    display:flex;align-items:center;gap:10px;user-select:none;outline-offset:-2px}
+    display:flex;align-items:center;gap:10px;user-select:none;outline-offset:-2px;flex-wrap:wrap}
   .branch header:focus-visible{outline:2px solid var(--accent)}
   .branch header .ic{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
-  .branch header h2{font-size:15.5px;margin:0;flex:1;font-weight:600}
+  .branch header h2{font-size:15.5px;margin:0;flex:1 1 auto;font-weight:600;min-width:0}
   .branch header .lvl{font-size:11px;color:var(--muted);white-space:nowrap}
   .b1 .ic{background:var(--b1)} .b2 .ic{background:var(--b2)}
   .b3 .ic{background:var(--b3)} .b4 .ic{background:var(--b4)}
-  .body{padding:6px 10px 12px}
-  .node{border-left:2px solid var(--line);margin:10px 0 10px 6px;padding:8px 0 8px 14px;position:relative}
-  .node::before{content:"";position:absolute;left:-6px;top:14px;width:10px;height:10px;
+  .body{padding:6px 12px 14px}
+  .node{border-left:2px solid var(--line);margin:10px 0 10px 4px;padding-left:14px;position:relative}
+  .node::before{content:"";position:absolute;left:-6px;top:16px;width:10px;height:10px;
     border-radius:50%;background:var(--panel);border:2px solid var(--muted)}
   .node.gap::before{border-color:var(--red);box-shadow:0 0 0 4px rgba(248,81,73,.15)}
   .node.have::before{border-color:var(--green);box-shadow:0 0 0 4px rgba(63,185,80,.15)}
-  .node h3{font-size:14px;margin:0 0 3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .tag{font-size:10px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:10px;text-transform:uppercase}
+  .nhead{display:flex;align-items:center;gap:8px;width:100%;text-align:left;
+    background:none;border:none;color:var(--text);font:inherit;cursor:pointer;
+    padding:7px 8px;margin:0 -8px;border-radius:8px;transition:background .15s}
+  .nhead:hover{background:rgba(255,255,255,.04)}
+  .nhead:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .nhead .tt{font-size:14px;font-weight:600;flex:1 1 auto;min-width:0;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .nhead .chev{flex:0 0 auto;color:var(--muted);font-size:11px;transition:transform .2s}
+  .node.open .nhead .chev{transform:rotate(90deg);color:var(--accent)}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:10px;text-transform:uppercase;white-space:nowrap}
   .tag.gap{background:rgba(248,81,73,.18);color:var(--red)}
   .tag.have{background:rgba(63,185,80,.18);color:var(--green)}
   .tag.opt{background:rgba(139,148,158,.18);color:var(--muted)}
-  .node p{font-size:12.5px;color:var(--muted);margin:0 0 8px}
+  .nbody{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease}
+  .node.open .nbody{grid-template-rows:1fr}
+  .ninner{overflow:hidden;min-height:0}
+  .ninner p{font-size:12.5px;color:var(--muted);margin:2px 0 10px;overflow-wrap:break-word;
+    white-space:normal;word-break:normal}
+  .ninner .chips{padding-bottom:4px}
   .chips{display:flex;flex-wrap:wrap;gap:6px}
   .chip{font-size:11.5px;background:var(--panel2);border:1px solid var(--line);
-    color:var(--text);text-decoration:none;padding:3px 9px;border-radius:8px;transition:.15s}
+    color:var(--text);text-decoration:none;padding:3px 9px;border-radius:8px;transition:.15s;
+    overflow-wrap:anywhere;max-width:100%}
   .chip:hover{border-color:var(--accent);color:var(--accent)}
   .chip.core{border-color:var(--gold);color:var(--gold);background:rgba(227,179,65,.08)}
   .chip.have{border-color:var(--green);color:var(--green);opacity:.85}
@@ -79,6 +99,9 @@
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
   @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion: reduce){
+    .nbody{transition:none}.nhead .chev{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -87,7 +110,9 @@
   <div class="sub">Built from <b>Andrew Ng's AI Engineering Skills Map</b> (DeepLearning.AI, Aug&ndash;Sep 2026) +
   his "three loops" framework. Node status is mapped to <b>your</b> profile:
   green = you already have it, red = your gap, gold = your differentiator.
-  Course chips link to the live DeepLearning.AI short course. <b>Click a branch header to collapse/expand</b> (or focus it and press Enter/Space).</div>
+  Course chips link to the live DeepLearning.AI short course.
+  <b>Click a branch header to collapse/expand it; click any node to expand its detail and course chips</b>
+  (keyboard: Tab to a header or node, press Enter/Space). Use the buttons to open or close everything at once.</div>
 
   <div class="legend">
     <span><i class="dot" style="background:var(--green)"></i> You already have this (from your profile)</span>
@@ -96,25 +121,33 @@
     <span><i class="dot" style="background:var(--muted)"></i> Optional / situational</span>
   </div>
 
-  <div class="grid">
+  <div class="toolbar">
+    <button class="tbtn" id="openAll" type="button">Show all nodes</button>
+    <button class="tbtn" id="closeAll" type="button">Close all nodes</button>
+  </div>
+
+  <div class="grid" id="tree">
 
     <!-- BRANCH 1 -->
-    <div class="branch b1">
+    <div class="branch b1" data-branch>
       <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
         <span class="ic"></span><h2>1 &middot; Building &amp; Deploying AI Applications</h2>
         <span class="lvl">6 sub-skills &middot; the AI-specific core</span></header>
       <div class="body">
         <div class="node have">
-          <h3>1a &middot; LLM Foundations <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">1a &middot; LLM Foundations <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Tokenization, context windows, caching, reasoning effort, sampling, tool calling, knowledge cutoff &rarr; knowing when a model will fail. You run local inference on a 5090, so this is home turf; formalize the tradeoff reasoning.</p>
           <div class="chips">
             <a class="chip have" href="https://www.deeplearning.ai/courses/generative-ai-with-llms">GenAI with LLMs <small>AWS</small></a>
             <a class="chip" href="https://www.deeplearning.ai/courses/reasoning-with-o1">Reasoning with o1</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/embedding-models-from-architecture-to-implementation">Embedding Models</a>
           </div>
+          </div></div>
         </div>
         <div class="node have">
-          <h3>1b &middot; Grounding Models with Data <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">1b &middot; Grounding Models with Data <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Prompt-context vs retrieval; vector index vs knowledge graph vs semantic layer; document&rarr;LLM pipeline engineering. Your specialty-mapper is exactly this &mdash; you build grounding pipelines for a living. You sit here today.</p>
           <div class="chips">
             <a class="chip have" href="https://www.deeplearning.ai/courses/retrieval-augmented-generation">RAG <small>core</small></a>
@@ -123,9 +156,11 @@
             <a class="chip" href="https://www.deeplearning.ai/courses/document-ai-from-ocr-to-agentic-doc-extraction">Document AI: OCR&rarr;Agentic</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/agentic-knowledge-graph-construction">Agentic Knowledge Graphs</a>
           </div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>1c &middot; Building Agentic Systems <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">1c &middot; Building Agentic Systems <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Workflow vs agent-harness spectrum; tool/memory/context design; multi-agent orchestration; guardrails for production. Fast-moving: voice, computer-use, generative UI. You use agents daily but the <i>architecture judgment</i> is the named skill.</p>
           <div class="chips">
             <a class="chip core" href="https://www.deeplearning.ai/courses/agentic-ai">Agentic AI <small>Ng</small></a>
@@ -137,147 +172,180 @@
             <a class="chip" href="https://www.deeplearning.ai/courses/building-toward-computer-use-with-anthropic">Toward Computer Use</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/voice-for-ai-agents-and-applications">Voice for AI Agents</a>
           </div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>1d &middot; Evaluation-Driven Development <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">1d &middot; Evaluation-Driven Development <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p><b>Ng's single most important sub-skill.</b> "The most important trait that distinguishes someone great at building AI systems is whether you can drive a disciplined evals/error-analysis loop." Exploratory error analysis &rarr; what to measure &rarr; deterministic vs LLM-judge vs human &rarr; evaluate your evals. You have eval truth (NUCC bijection) but the <i>loop discipline</i> is the named skill.</p>
           <div class="chips">
             <a class="chip core" href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents <small>Arize</small></a>
             <a class="chip" href="https://www.deeplearning.ai/courses/fast-prototyping-of-genai-apps-with-streamlit">Fast Prototyping w/ Streamlit</a>
           </div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>1e &middot; Operating in Production <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">1e &middot; Operating in Production <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Observability, drift detection, model-failure &amp; prompt-injection response, risk-calibrated regression/CI-CD, and the cost/latency/quality lever (smaller model vs distill vs fine-tune vs simplify workflow). <b>This is the serving/MLOps gap you already named as your weakness &mdash; and the FDE differentiator.</b></p>
           <div class="chips">
             <a class="chip have" href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM Inference <small>Red Hat</small></a>
             <a class="chip" href="https://www.deeplearning.ai/courses/fast-llm-inference-with-cerebras">Fast Inference w/ Cerebras</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/build-ai-apps-with-mcp-server-working-with-box-files">MCP Server: Box Files</a>
           </div>
+          </div></div>
         </div>
         <div class="node have">
-          <h3>1f &middot; Machine Learning Foundations <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">1f &middot; Machine Learning Foundations <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Bias/variance, error analysis, data engineering. "Modern LLMs are built with supervised + reinforcement learning" &mdash; you already own this from your DS/PyTorch background. No new course required; keep it warm.</p>
           <div class="chips">
             <a class="chip have" href="https://www.deeplearning.ai/courses/transformers-in-practice">Transformers in Practice <small>AMD</small></a>
             <a class="chip" href="https://www.deeplearning.ai/courses/attention-in-transformers-concepts-and-code-in-pytorch">Attention in Transformers <small>StatQuest</small></a>
           </div>
+          </div></div>
         </div>
       </div>
     </div>
 
     <!-- BRANCH 2 -->
-    <div class="branch b2">
+    <div class="branch b2" data-branch>
       <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
         <span class="ic"></span><h2>2 &middot; Software Engineering Fundamentals</h2>
         <span class="lvl">5 areas &middot; the anti-vibe-coding branch</span></header>
       <div class="body">
         <div class="node have">
-          <h3>2a &middot; Full-Stack Applications <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">2a &middot; Full-Stack Applications <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Front to back, data to API. Your strong Python/SQL base covers most of it; the AI-specific part is serving a model as an API (FastAPI) &mdash; the exact gap you flagged.</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/fast-prototyping-of-genai-apps-with-streamlit">Fast Prototyping w/ Streamlit</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows <small>Astronomer</small></a>
           </div>
+          </div></div>
         </div>
         <div class="node have">
-          <h3>2b &middot; Data Management <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">2b &middot; Data Management <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Data modeling, consistency, quality. Your SQL + data-science background is the strongest node in the whole tree. Keep it sharp; it's the substrate for grounding pipelines.</p>
           <div class="chips"><span class="chip have" style="cursor:default">No course needed &mdash; you own this</span></div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>2c &middot; System Architecture <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">2c &middot; System Architecture <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>"When you understand the major components of the full stack of software and data, you are better positioned to decide how to put the pieces together." Boundaries, failure domains, state ownership. This is where FDE architecture judgment lives.</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/pydantic-for-llm-workflows">Pydantic for LLM Workflows</a>
           </div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>2d &middot; Security &amp; Reliability <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">2d &middot; Security &amp; Reliability <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Threat model, least privilege, data sensitivity, downstream authority. For AI: prompt injection, data exfiltration, sandboxing agents with permissions/gating. A production-incident skill, not a checkbox.</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/build-ai-apps-with-mcp-server-working-with-box-files">MCP: governed tool access</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review <small>Qodo</small></a>
           </div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>2e &middot; Scaling &amp; Production Operations <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">2e &middot; Scaling &amp; Production Operations <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>SLOs, incidents, rollback, idempotency, cost attribution. The MLOps/LLMOps layer &mdash; your named weakness and the thing that separates an FDE who ships from one who demos.</p>
           <div class="chips">
             <a class="chip have" href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM Inference</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/fast-llm-inference-with-cerebras">Cerebras Inference</a>
           </div>
+          </div></div>
         </div>
       </div>
     </div>
 
     <!-- BRANCH 3 -->
-    <div class="branch b3">
+    <div class="branch b3" data-branch>
       <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
         <span class="ic"></span><h2>3 &middot; Using Coding Agents</h2>
         <span class="lvl">5 sub-skills &middot; evolving fastest</span></header>
       <div class="body">
         <div class="node have">
-          <h3>3a &middot; Directing the Workflow <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3a &middot; Directing the Workflow <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>The meta-skill: planning &rarr; execution &rarr; deployment; deciding human vs agent effort per step; when to iterate back; speed/cost/risk tradeoffs. You run Claude Code/Codex daily &mdash; you already do this, now make it explicit and deliberate.</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development <small>JetBrains</small></a>
             <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows <small>JetBrains</small></a>
           </div>
+          </div></div>
         </div>
         <div class="node have">
-          <h3>3b &middot; Enabling Agent Autonomy <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3b &middot; Enabling Agent Autonomy <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Calibrating autonomy per task, managing context across phases, parallel agents + orchestration, safe permissions/gating. Ng: "set it and forget it" is overhyped; high-skill human intervention wins.</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant">Claude Code: Agentic Assistant</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows</a>
           </div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>3c &middot; Reviewing the Work <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3c &middot; Reviewing the Work <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Designing behavioral + functional validation matched to the task; agents providing screenshots as evidence; eval sets + LLM-as-judge; agentic code review; AI security/architecture audits. The verification half is where most agent users are weak.</p>
           <div class="chips">
             <a class="chip core" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review <small>Qodo</small></a>
             <a class="chip" href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents</a>
           </div>
+          </div></div>
         </div>
         <div class="node have">
-          <h3>3d &middot; Staying Current <span class="tag have">have</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3d &middot; Staying Current <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>"A continuous process of experimentation, building, and learning" &mdash; the tools change in strides. You already do this (you track the tooling). Systematize it: a weekly build-and-break habit.</p>
           <div class="chips"><span class="chip have" style="cursor:default">Habit, not a course &mdash; you do this already</span></div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>3e &middot; Knowing Failure Modes <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3e &middot; Knowing Failure Modes <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Where agents go off-track: an agent with unrestricted access wrecking a prod DB, context rot, overengineering, silent wrong assumptions. The named failure modes are the skill &mdash; recognize them before they cost you.</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a>
           </div>
+          </div></div>
         </div>
       </div>
     </div>
 
     <!-- BRANCH 4 -->
-    <div class="branch b4">
+    <div class="branch b4" data-branch>
       <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
         <span class="ic"></span><h2>4 &middot; Shaping the Build</h2>
         <span class="lvl">product judgment &middot; most career-defining</span></header>
       <div class="body">
         <div class="node gap">
-          <h3>4a &middot; Product Sense &amp; Business Context <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4a &middot; Product Sense &amp; Business Context <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>"Engineers should no longer expect to be given a pixel-perfect design and asked only to implement it." The work shifts upstream to deciding what the spec should be. This is the FDE core &mdash; you live in the client's business problem, not the code.</p>
           <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; this is judgment built from client work</span></div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>4b &middot; The Three Loops <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4b &middot; The Three Loops <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Ng's June 2026 framework: an inner <b>agentic coding loop</b> (minutes) wrapped by a slower <b>developer feedback loop</b>, wrapped by a <b>market/customer feedback loop</b> that decides what the inner loop should even build. Your moat is owning the outer two loops, not the inner one the agent runs.</p>
           <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">Read: Ng's "three loops" letter (Jun 30 2026, The Batch)</span></div>
+          </div></div>
         </div>
         <div class="node gap">
-          <h3>4c &middot; Judgment of Pace (MVP vs careful) <span class="tag gap">gap</span></h3>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4c &middot; Judgment of Pace (MVP vs careful) <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
           <p>Knowing when to ship a rough MVP to real users vs slow down and build carefully. The same tension as the three loops. This is the skill that compounds into seniority and into FDE pricing power.</p>
           <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; deliberate practice on real builds</span></div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -334,6 +402,17 @@
 <script>
 function tg(h){var b=h.nextElementSibling;var open=b.style.display!=='none';b.style.display=open?'none':'';h.setAttribute('aria-expanded',String(!open));}
 function tk(e,h){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg(h);}}
+function nodeToggle(b){var n=b.closest('.node');if(!n)return;var open=n.classList.toggle('open');b.setAttribute('aria-expanded',String(open));}
+function setAll(open){
+  document.querySelectorAll('.node').forEach(function(n){n.classList.toggle('open',open);
+    var b=n.querySelector('.nhead');if(b)b.setAttribute('aria-expanded',String(open));});
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.nhead').forEach(function(b){b.addEventListener('click',function(){nodeToggle(b);});});
+  var o=document.getElementById('openAll'),c=document.getElementById('closeAll');
+  if(o)o.addEventListener('click',function(){setAll(true);});
+  if(c)c.addEventListener('click',function(){setAll(false);});
+});
 </script>
 </body>
 </html>
