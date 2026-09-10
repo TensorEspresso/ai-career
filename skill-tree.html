@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI Engineer skill tree built from Andrew Ng's AI Engineering Skills Map (DeepLearning.AI, 2026), with node status mapped to a specific engineer's profile.">
+<meta name="theme-color" content="#0d1117">
+<meta property="og:title" content="AI Engineer Skill Tree">
+<meta property="og:description" content="Career-defense skill tree from Andrew Ng's 2026 AI Engineering Skills Map.">
+<meta property="og:type" content="website">
+<title>AI Engineer Skill Tree — built from Andrew Ng's Skills Map</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#58a6ff; --gold:#e3b341;
+    --green:#3fb950; --red:#f85149; --purple:#bc8cff; --teal:#39d0d8;
+    --b1:#58a6ff; --b2:#39d0d8; --b3:#bc8cff; --b4:#e3b341;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;padding:24px}
+  .wrap{max-width:1240px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin-bottom:20px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;font-size:12.5px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;background:var(--panel);
+    border:1px solid var(--line);padding:5px 10px;border-radius:20px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+  .branch{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .branch header{padding:14px 16px;border-bottom:1px solid var(--line);cursor:pointer;
+    display:flex;align-items:center;gap:10px;user-select:none;outline-offset:-2px}
+  .branch header:focus-visible{outline:2px solid var(--accent)}
+  .branch header .ic{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+  .branch header h2{font-size:15.5px;margin:0;flex:1;font-weight:600}
+  .branch header .lvl{font-size:11px;color:var(--muted);white-space:nowrap}
+  .b1 .ic{background:var(--b1)} .b2 .ic{background:var(--b2)}
+  .b3 .ic{background:var(--b3)} .b4 .ic{background:var(--b4)}
+  .body{padding:6px 10px 12px}
+  .node{border-left:2px solid var(--line);margin:10px 0 10px 6px;padding:8px 0 8px 14px;position:relative}
+  .node::before{content:"";position:absolute;left:-6px;top:14px;width:10px;height:10px;
+    border-radius:50%;background:var(--panel);border:2px solid var(--muted)}
+  .node.gap::before{border-color:var(--red);box-shadow:0 0 0 4px rgba(248,81,73,.15)}
+  .node.have::before{border-color:var(--green);box-shadow:0 0 0 4px rgba(63,185,80,.15)}
+  .node h3{font-size:14px;margin:0 0 3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tag{font-size:10px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:10px;text-transform:uppercase}
+  .tag.gap{background:rgba(248,81,73,.18);color:var(--red)}
+  .tag.have{background:rgba(63,185,80,.18);color:var(--green)}
+  .tag.opt{background:rgba(139,148,158,.18);color:var(--muted)}
+  .node p{font-size:12.5px;color:var(--muted);margin:0 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:11.5px;background:var(--panel2);border:1px solid var(--line);
+    color:var(--text);text-decoration:none;padding:3px 9px;border-radius:8px;transition:.15s}
+  .chip:hover{border-color:var(--accent);color:var(--accent)}
+  .chip.core{border-color:var(--gold);color:var(--gold);background:rgba(227,179,65,.08)}
+  .chip.have{border-color:var(--green);color:var(--green);opacity:.85}
+  .chip small{color:var(--muted);font-size:10px}
+  .section{margin-top:30px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px}
+  .section h2{font-size:18px;margin:0 0 10px}
+  .path{counter-reset:step;list-style:none;padding:0;margin:0}
+  .path li{counter-increment:step;position:relative;padding:10px 12px 10px 46px;
+    border-left:2px solid var(--line);margin-left:14px}
+  .path li::before{content:counter(step);position:absolute;left:-14px;top:8px;width:26px;
+    height:26px;border-radius:50%;background:var(--panel2);border:2px solid var(--accent);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent)}
+  .path li b{color:var(--text)}
+  .path li span{color:var(--muted);font-size:13px;display:block;margin-top:2px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+  .verdict{border-left:3px solid var(--green);padding:10px 14px;background:var(--panel2);
+    border-radius:0 8px 8px 0;margin-top:14px;font-size:13.5px}
+  .verdict.warn{border-left-color:var(--gold)}
+  .verdict ul{margin:8px 0 0;padding-left:18px}
+  .verdict li{margin:5px 0}
+  .foot{color:var(--muted);font-size:12px;margin-top:24px;line-height:1.7}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AI Engineer Skill Tree</h1>
+  <div class="sub">Built from <b>Andrew Ng's AI Engineering Skills Map</b> (DeepLearning.AI, Aug&ndash;Sep 2026) +
+  his "three loops" framework. Node status is mapped to <b>your</b> profile:
+  green = you already have it, red = your gap, gold = your differentiator.
+  Course chips link to the live DeepLearning.AI short course. <b>Click a branch header to collapse/expand</b> (or focus it and press Enter/Space).</div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:var(--green)"></i> You already have this (from your profile)</span>
+    <span><i class="dot" style="background:var(--red)"></i> Your gap &mdash; highest-leverage to close</span>
+    <span><i class="dot" style="background:var(--gold)"></i> Core / differentiator (FDE moat)</span>
+    <span><i class="dot" style="background:var(--muted)"></i> Optional / situational</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- BRANCH 1 -->
+    <div class="branch b1">
+      <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
+        <span class="ic"></span><h2>1 &middot; Building &amp; Deploying AI Applications</h2>
+        <span class="lvl">6 sub-skills &middot; the AI-specific core</span></header>
+      <div class="body">
+        <div class="node have">
+          <h3>1a &middot; LLM Foundations <span class="tag have">have</span></h3>
+          <p>Tokenization, context windows, caching, reasoning effort, sampling, tool calling, knowledge cutoff &rarr; knowing when a model will fail. You run local inference on a 5090, so this is home turf; formalize the tradeoff reasoning.</p>
+          <div class="chips">
+            <a class="chip have" href="https://www.deeplearning.ai/courses/generative-ai-with-llms">GenAI with LLMs <small>AWS</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/reasoning-with-o1">Reasoning with o1</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/embedding-models-from-architecture-to-implementation">Embedding Models</a>
+          </div>
+        </div>
+        <div class="node have">
+          <h3>1b &middot; Grounding Models with Data <span class="tag have">have</span></h3>
+          <p>Prompt-context vs retrieval; vector index vs knowledge graph vs semantic layer; document&rarr;LLM pipeline engineering. Your specialty-mapper is exactly this &mdash; you build grounding pipelines for a living. You sit here today.</p>
+          <div class="chips">
+            <a class="chip have" href="https://www.deeplearning.ai/courses/retrieval-augmented-generation">RAG <small>core</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/advanced-retrieval-for-ai">Advanced Retrieval <small>Chroma</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/building-multimodal-search-and-rag">Multimodal Search &amp; RAG</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/document-ai-from-ocr-to-agentic-doc-extraction">Document AI: OCR&rarr;Agentic</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/agentic-knowledge-graph-construction">Agentic Knowledge Graphs</a>
+          </div>
+        </div>
+        <div class="node gap">
+          <h3>1c &middot; Building Agentic Systems <span class="tag gap">gap</span></h3>
+          <p>Workflow vs agent-harness spectrum; tool/memory/context design; multi-agent orchestration; guardrails for production. Fast-moving: voice, computer-use, generative UI. You use agents daily but the <i>architecture judgment</i> is the named skill.</p>
+          <div class="chips">
+            <a class="chip core" href="https://www.deeplearning.ai/courses/agentic-ai">Agentic AI <small>Ng</small></a>
+            <a class="chip core" href="https://www.deeplearning.ai/courses/building-adaptive-ai-agents">Building Adaptive AI Agents <small>Oracle</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/long-term-agentic-memory-with-langgraph">Long-Term Agentic Memory <small>LangGraph</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/multi-ai-agent-systems-with-crewai">Multi-Agent Systems <small>crewAI</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/dspy-build-optimize-agentic-apps">DSPy: Build &amp; Optimize Agentic Apps</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/mcp-build-rich-context-ai-apps-with-anthropic">MCP: Rich-Context AI Apps</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/building-toward-computer-use-with-anthropic">Toward Computer Use</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/voice-for-ai-agents-and-applications">Voice for AI Agents</a>
+          </div>
+        </div>
+        <div class="node gap">
+          <h3>1d &middot; Evaluation-Driven Development <span class="tag gap">gap</span></h3>
+          <p><b>Ng's single most important sub-skill.</b> "The most important trait that distinguishes someone great at building AI systems is whether you can drive a disciplined evals/error-analysis loop." Exploratory error analysis &rarr; what to measure &rarr; deterministic vs LLM-judge vs human &rarr; evaluate your evals. You have eval truth (NUCC bijection) but the <i>loop discipline</i> is the named skill.</p>
+          <div class="chips">
+            <a class="chip core" href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents <small>Arize</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/fast-prototyping-of-genai-apps-with-streamlit">Fast Prototyping w/ Streamlit</a>
+          </div>
+        </div>
+        <div class="node gap">
+          <h3>1e &middot; Operating in Production <span class="tag gap">gap</span></h3>
+          <p>Observability, drift detection, model-failure &amp; prompt-injection response, risk-calibrated regression/CI-CD, and the cost/latency/quality lever (smaller model vs distill vs fine-tune vs simplify workflow). <b>This is the serving/MLOps gap you already named as your weakness &mdash; and the FDE differentiator.</b></p>
+          <div class="chips">
+            <a class="chip have" href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM Inference <small>Red Hat</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/fast-llm-inference-with-cerebras">Fast Inference w/ Cerebras</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/build-ai-apps-with-mcp-server-working-with-box-files">MCP Server: Box Files</a>
+          </div>
+        </div>
+        <div class="node have">
+          <h3>1f &middot; Machine Learning Foundations <span class="tag have">have</span></h3>
+          <p>Bias/variance, error analysis, data engineering. "Modern LLMs are built with supervised + reinforcement learning" &mdash; you already own this from your DS/PyTorch background. No new course required; keep it warm.</p>
+          <div class="chips">
+            <a class="chip have" href="https://www.deeplearning.ai/courses/transformers-in-practice">Transformers in Practice <small>AMD</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/attention-in-transformers-concepts-and-code-in-pytorch">Attention in Transformers <small>StatQuest</small></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRANCH 2 -->
+    <div class="branch b2">
+      <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
+        <span class="ic"></span><h2>2 &middot; Software Engineering Fundamentals</h2>
+        <span class="lvl">5 areas &middot; the anti-vibe-coding branch</span></header>
+      <div class="body">
+        <div class="node have">
+          <h3>2a &middot; Full-Stack Applications <span class="tag have">have</span></h3>
+          <p>Front to back, data to API. Your strong Python/SQL base covers most of it; the AI-specific part is serving a model as an API (FastAPI) &mdash; the exact gap you flagged.</p>
+          <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/fast-prototyping-of-genai-apps-with-streamlit">Fast Prototyping w/ Streamlit</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows <small>Astronomer</small></a>
+          </div>
+        </div>
+        <div class="node have">
+          <h3>2b &middot; Data Management <span class="tag have">have</span></h3>
+          <p>Data modeling, consistency, quality. Your SQL + data-science background is the strongest node in the whole tree. Keep it sharp; it's the substrate for grounding pipelines.</p>
+          <div class="chips"><span class="chip have" style="cursor:default">No course needed &mdash; you own this</span></div>
+        </div>
+        <div class="node gap">
+          <h3>2c &middot; System Architecture <span class="tag gap">gap</span></h3>
+          <p>"When you understand the major components of the full stack of software and data, you are better positioned to decide how to put the pieces together." Boundaries, failure domains, state ownership. This is where FDE architecture judgment lives.</p>
+          <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/pydantic-for-llm-workflows">Pydantic for LLM Workflows</a>
+          </div>
+        </div>
+        <div class="node gap">
+          <h3>2d &middot; Security &amp; Reliability <span class="tag gap">gap</span></h3>
+          <p>Threat model, least privilege, data sensitivity, downstream authority. For AI: prompt injection, data exfiltration, sandboxing agents with permissions/gating. A production-incident skill, not a checkbox.</p>
+          <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/build-ai-apps-with-mcp-server-working-with-box-files">MCP: governed tool access</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review <small>Qodo</small></a>
+          </div>
+        </div>
+        <div class="node gap">
+          <h3>2e &middot; Scaling &amp; Production Operations <span class="tag gap">gap</span></h3>
+          <p>SLOs, incidents, rollback, idempotency, cost attribution. The MLOps/LLMOps layer &mdash; your named weakness and the thing that separates an FDE who ships from one who demos.</p>
+          <div class="chips">
+            <a class="chip have" href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM Inference</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/fast-llm-inference-with-cerebras">Cerebras Inference</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRANCH 3 -->
+    <div class="branch b3">
+      <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
+        <span class="ic"></span><h2>3 &middot; Using Coding Agents</h2>
+        <span class="lvl">5 sub-skills &middot; evolving fastest</span></header>
+      <div class="body">
+        <div class="node have">
+          <h3>3a &middot; Directing the Workflow <span class="tag have">have</span></h3>
+          <p>The meta-skill: planning &rarr; execution &rarr; deployment; deciding human vs agent effort per step; when to iterate back; speed/cost/risk tradeoffs. You run Claude Code/Codex daily &mdash; you already do this, now make it explicit and deliberate.</p>
+          <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development <small>JetBrains</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows <small>JetBrains</small></a>
+          </div>
+        </div>
+        <div class="node have">
+          <h3>3b &middot; Enabling Agent Autonomy <span class="tag have">have</span></h3>
+          <p>Calibrating autonomy per task, managing context across phases, parallel agents + orchestration, safe permissions/gating. Ng: "set it and forget it" is overhyped; high-skill human intervention wins.</p>
+          <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant">Claude Code: Agentic Assistant</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows</a>
+          </div>
+        </div>
+        <div class="node gap">
+          <h3>3c &middot; Reviewing the Work <span class="tag gap">gap</span></h3>
+          <p>Designing behavioral + functional validation matched to the task; agents providing screenshots as evidence; eval sets + LLM-as-judge; agentic code review; AI security/architecture audits. The verification half is where most agent users are weak.</p>
+          <div class="chips">
+            <a class="chip core" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review <small>Qodo</small></a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents</a>
+          </div>
+        </div>
+        <div class="node have">
+          <h3>3d &middot; Staying Current <span class="tag have">have</span></h3>
+          <p>"A continuous process of experimentation, building, and learning" &mdash; the tools change in strides. You already do this (you track the tooling). Systematize it: a weekly build-and-break habit.</p>
+          <div class="chips"><span class="chip have" style="cursor:default">Habit, not a course &mdash; you do this already</span></div>
+        </div>
+        <div class="node gap">
+          <h3>3e &middot; Knowing Failure Modes <span class="tag gap">gap</span></h3>
+          <p>Where agents go off-track: an agent with unrestricted access wrecking a prod DB, context rot, overengineering, silent wrong assumptions. The named failure modes are the skill &mdash; recognize them before they cost you.</p>
+          <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRANCH 4 -->
+    <div class="branch b4">
+      <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
+        <span class="ic"></span><h2>4 &middot; Shaping the Build</h2>
+        <span class="lvl">product judgment &middot; most career-defining</span></header>
+      <div class="body">
+        <div class="node gap">
+          <h3>4a &middot; Product Sense &amp; Business Context <span class="tag gap">gap</span></h3>
+          <p>"Engineers should no longer expect to be given a pixel-perfect design and asked only to implement it." The work shifts upstream to deciding what the spec should be. This is the FDE core &mdash; you live in the client's business problem, not the code.</p>
+          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; this is judgment built from client work</span></div>
+        </div>
+        <div class="node gap">
+          <h3>4b &middot; The Three Loops <span class="tag gap">gap</span></h3>
+          <p>Ng's June 2026 framework: an inner <b>agentic coding loop</b> (minutes) wrapped by a slower <b>developer feedback loop</b>, wrapped by a <b>market/customer feedback loop</b> that decides what the inner loop should even build. Your moat is owning the outer two loops, not the inner one the agent runs.</p>
+          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">Read: Ng's "three loops" letter (Jun 30 2026, The Batch)</span></div>
+        </div>
+        <div class="node gap">
+          <h3>4c &middot; Judgment of Pace (MVP vs careful) <span class="tag gap">gap</span></h3>
+          <p>Knowing when to ship a rough MVP to real users vs slow down and build carefully. The same tension as the three loops. This is the skill that compounds into seniority and into FDE pricing power.</p>
+          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; deliberate practice on real builds</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRITICAL PATH -->
+  <div class="section">
+    <h2>Your Critical Path (red gaps, in leverage order)</h2>
+    <p style="color:var(--muted);font-size:13.5px;margin:0 0 6px">You enter the tree already strong on 1a, 1b, 1f, 2a, 2b, 3a, 3b, 3d (green). The 10 nodes below are where you invest. Ng's own ordering inside Branch 1: get LLM foundations solid, then build the <b>evals loop before</b> you scale grounding, agents, or production complexity. The first 3 nodes here do exactly that.</p>
+    <ol class="path">
+      <li><b>Evaluation-Driven Development (1d)</b><span>Ng's #1 sub-skill. Take <a href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents</a>. You have eval truth; build the loop discipline. Everything else is steerable only if this exists.</span></li>
+      <li><b>Agentic Systems architecture (1c)</b><span><a href="https://www.deeplearning.ai/courses/agentic-ai">Agentic AI</a> + <a href="https://www.deeplearning.ai/courses/building-adaptive-ai-agents">Building Adaptive AI Agents</a>. Move from using agents to choosing where on the workflow&harr;harness spectrum a problem lives.</span></li>
+      <li><b>Production / LLM serving (1e + 2e)</b><span>Your named MLOps gap. <a href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM</a> (you know) + observability, drift, cost/latency lever. This is the FDE moat: you can ship, not just demo.</span></li>
+      <li><b>System Architecture (2c) + Security (2d)</b><span>Boundaries, failure domains, prompt-injection, sandboxing. <a href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows</a> + <a href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a>.</span></li>
+      <li><b>Reviewing agent work (3c) + failure modes (3e)</b><span><a href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a> + <a href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a>. The verification half where most agent users are weak.</span></li>
+      <li><b>Shaping the build (4a&ndash;4c)</b><span>No course &mdash; this is judgment. Read the three-loops letter; deliberately own the market + developer loops on every build. This is what your FDE career is actually selling.</span></li>
+    </ol>
+  </div>
+
+  <!-- VALIDATION -->
+  <div class="section">
+    <h2>Validation &mdash; does this actually protect your career?</h2>
+    <table>
+      <tr><th style="width:26%">Claim to check</th><th>Verdict against the sources</th></tr>
+      <tr><td>Is the 4-branch structure real and current?</td>
+        <td><b>Yes &mdash; verified primary + 3 independent.</b> Ng published the map Aug 14 2026 (X post 2088302050706686198), with Part 1 (Aug 21, X 2090840747738374568), Part 2 software-fundamentals (Aug 28), and coding-agents (Sep 4). Corroborated by The Batch, TrueFoundry, and explainx.ai. Not a single-source rumor.</td></tr>
+      <tr><td>Is it grounded in evidence, not opinion?</td>
+        <td><b>Yes.</b> Ng's stated method: 10,000+ job postings + structured expert/hiring-manager interviews + survey data, "akin to clustering a massive dataset." He explicitly targets skills durable "as the tooling changes underneath them" &mdash; the future-proofing you asked about is the framework's stated design goal.</td></tr>
+      <tr><td>Does it match YOUR actual gap?</td>
+        <td><b>Yes, strikingly.</b> Ng's map says the scarce, durable skills are (i) statistical evals to govern unpredictable systems, (ii) software fundamentals to steer agents, (iii) product judgment. Your self-reported weakness is serving/MLOps/APIs/deployment = node 1e/2e. Your strength (data/SQL/ML) = the nodes the map says are becoming <i>table stakes</i>, not differentiators. The tree points you at exactly the gap you already feel.</td></tr>
+      <tr><td>Is "AI Engineer" a real, hireable role?</td>
+        <td><b>Yes, but with a nuance.</b> Ng deliberately frames these as skills <i>every</i> developer needs (like cloud), not a title. He also names the FDE role explicitly ("an engineer embedded within a client organization to help customize solutions... building and tuning agentic workflows"). Your DS&rarr;AI Eng&rarr;FDE path is the one the map endorses. The map does <b>not</b> say "get the AI Engineer title" &mdash; it says build the four skills, which is a stronger, more durable claim.</td></tr>
+      <tr><td>Does it protect you from AI eating the job?</td>
+        <td><b>Partially &mdash; it's the right map, but read the caveats below.</b> The map's own logic is that code-generation is the part commoditizing fastest; the scarce parts are judgment about tradeoffs, priorities, and pace. That is precisely Branches 2c/2d and all of Branch 4. So the tree protects you <i>if you weight Branch 4 and the production nodes</i> over "learn more prompting." It will not protect you if you treat it as a course checklist and stop there &mdash; the map is a self-audit, not a reading list.</td></tr>
+    </table>
+    <div class="verdict"><b>Bottom line:</b> The tree is a faithful, current, multi-source-verified rendering of Ng's actual framework, and it independently converges on the exact serving/MLOps gap you already identified. It is a sound career-defense map <i>for the AI-engineer track</i>.</div>
+    <div class="verdict warn"><b>Three honest caveats (the map won't tell you these):</b>
+      <ul>
+        <li><b>It's US/Silicon-Valley job-market data.</b> 10k postings skew to the roles most advertised, so it over-weights what's hireable <i>now</i> and under-weights 3&ndash;5yr structure. Good for the next 12&ndash;24 months, not a decade.</li>
+        <li><b>Branch 4 has no course</b> because it's judgment, not knowledge &mdash; you can't "complete" it, you can only practice it on real client work. If you only do the course nodes, you'll be a strong implementer, not a durable one.</li>
+        <li><b>Nobody's map is a moat by itself.</b> The durable protection is the <i>combination</i>: your domain (provider data/network mgmt) + the four skills + the FDE model of owning the outer two loops. The tree gets you the skills; the domain + FDE model is what makes them hard to replace. Keep the local-inference edge too &mdash; it's a real differentiator for the serving layer the map says is scarce.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="foot">
+    <b>Sources (all checked 2026-09-10):</b>
+    Ng, "AI Engineering Skills Map" X post 2088302050706686198 (Aug 14 2026) &middot; "Building &amp; Deploying AI Applications" X 2090840747738374568 (Aug 21) &middot; "Software engineering fundamentals" X 2093388974194872781 (Aug 28) &middot; coding-agents follow-up (Sep 4) via explainx.ai.
+    DeepLearning.AI The Batch "The AI Engineering Skills Map" &middot; TrueFoundry "Andrew Ng's AI Engineering Skills Map" (Sep 1 2026) &middot; explainx.ai "4 Skills" (Aug 15) + "6 Sub-Skills" (Aug 22) + "3 Loops" (Jun 30) &middot;
+    Course catalog scraped live from deeplearning.ai/courses (47 short courses, 2026-09-10).
+    Node status (green/red) is <b>a mapping of your profile</b>, not from Ng.
+  </div>
+</div>
+<script>
+function tg(h){var b=h.nextElementSibling;var open=b.style.display!=='none';b.style.display=open?'none':'';h.setAttribute('aria-expanded',String(!open));}
+function tk(e,h){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg(h);}}
+</script>
+</body>
+</html>
