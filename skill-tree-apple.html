@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23000'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%232997ff' stroke-width='10'/%3E%3C/svg%3E">
+<meta name="description" content="AI Engineer skill tree built from Andrew Ng's AI Engineering Skills Map (DeepLearning.AI, 2026), with node status mapped to a specific engineer's profile. Apple-style edition.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="AI Engineer Skill Tree">
+<meta property="og:description" content="Career-defense skill tree from Andrew Ng's 2026 AI Engineering Skills Map.">
+<meta property="og:type" content="website">
+<title>AI Engineer Skill Tree</title>
+<script>document.documentElement.className += ' js';</script>
+<style>
+  :root{
+    --bg:#000; --card:#1d1d1f; --card2:#2c2c2e;
+    --text:#f5f5f7; --muted:#86868b; --blue:#2997ff;
+    --green:#30d15a; --red:#ff453a; --purple:#bf5af2; --orange:#ff9f0a;
+    --line:rgba(255,255,255,.1);
+    --g1:linear-gradient(120deg,#2997ff,#64d2ff);
+    --g2:linear-gradient(120deg,#30d15a,#64d2ff);
+    --g3:linear-gradient(120deg,#bf5af2,#ff375f);
+    --g4:linear-gradient(120deg,#ff9f0a,#ff375f);
+    --gh:linear-gradient(90deg,#2997ff 0%,#bf5af2 50%,#ff9f0a 100%);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  section[id]{scroll-margin-top:72px}
+  .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .prose{max-width:980px;margin:0 auto;padding:0 24px}
+
+  /* progress bar */
+  .progress{position:fixed;top:env(safe-area-inset-top,0);left:0;right:0;height:2px;z-index:60;
+    background:var(--gh);transform-origin:0 50%;transform:scaleX(0)}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:50;padding-top:env(safe-area-inset-top,0);background:rgba(22,22,23,.8);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
+    padding:0 24px;height:52px}
+  .brand{font-weight:600;font-size:15px;color:var(--text);letter-spacing:-0.01em}
+  .brand:hover{text-decoration:none}
+  .nav-links{display:flex;align-items:center}
+  .nav-links a{color:var(--muted);font-size:13px;margin-left:22px}
+  .nav-links a:hover{color:var(--text);text-decoration:none}
+  .nav-links a.nav-cta{color:var(--blue);font-weight:600}
+
+  /* hero */
+  .hero{padding:110px 24px 90px;text-align:center;max-width:1040px;margin:0 auto}
+  .eyebrow{color:var(--muted);font-size:15px;margin:0 0 10px}
+  .eyebrow b{color:var(--text);font-weight:600}
+  h1{font-size:clamp(56px,9vw,112px);line-height:1.02;letter-spacing:-0.02em;font-weight:700;margin:0 0 24px}
+  .grad{color:var(--blue)}
+  @supports (-webkit-background-clip:text) or (background-clip:text){
+    .grad{background:var(--gh);-webkit-background-clip:text;background-clip:text;
+      color:transparent;-webkit-text-fill-color:transparent}
+  }
+  .lede{font-size:clamp(18px,2.4vw,23px);color:var(--muted);line-height:1.5;max-width:780px;margin:0 auto 36px}
+  .lede b{color:var(--text);font-weight:600}
+  .cta{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:14px 28px;border-radius:980px;font-size:17px;letter-spacing:-0.01em;transition:background .2s}
+  .btn:hover{text-decoration:none}
+  .btn.primary{background:#0071e3;color:#fff}
+  .btn.primary:hover{background:#0077ed}
+  .btn.text{color:var(--blue);padding:14px 4px;font-size:16px}
+  .stats{display:flex;justify-content:center;gap:56px;margin-top:72px;flex-wrap:wrap}
+  .stats div{text-align:center}
+  .stats b{display:block;font-size:44px;font-weight:700;letter-spacing:-0.02em;line-height:1.1}
+  .stats span{color:var(--muted);font-size:14px}
+  .detail-toggle{margin-top:44px;display:flex;justify-content:center;gap:24px}
+  .detail-toggle button{background:none;border:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;padding:6px 10px;border-radius:8px}
+  .detail-toggle button:hover{color:var(--text)}
+  .detail-toggle button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+  /* chapters */
+  .chapter{padding:100px 0 40px}
+  .chapter-head{position:relative;max-width:980px;margin:0 auto 52px;padding:0 24px}
+  .ghost{position:absolute;top:12px;right:24px;z-index:0;font-size:clamp(120px,18vw,220px);font-weight:800;
+    line-height:1;letter-spacing:-0.04em;user-select:none;pointer-events:none;text-align:right;
+    color:rgba(41,151,255,.10)}
+  .g2 .ghost{color:rgba(48,209,90,.10)}
+  .g3 .ghost{color:rgba(191,90,242,.10)}
+  .g4 .ghost{color:rgba(255,159,10,.10)}
+  .chapter-head>*{position:relative;z-index:1}
+  .kicker{font-size:15px;font-weight:600;margin:0 0 12px;letter-spacing:.01em}
+  .g1 .kicker{color:var(--blue)} .g2 .kicker{color:var(--green)}
+  .g3 .kicker{color:var(--purple)} .g4 .kicker{color:var(--orange)}
+  h2{font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-0.02em;font-weight:700;margin:0 0 16px}
+  .tagline{font-size:19px;color:var(--muted);line-height:1.5;max-width:720px;margin:0}
+
+  /* bento cards */
+  .bento{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  .card{grid-column:span 2;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:24px;
+    padding:24px;display:flex;flex-direction:column;gap:14px;cursor:pointer;touch-action:manipulation;
+    transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+  .card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.14);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+  .card:active{transform:scale(.99)}
+  .card a{cursor:pointer}
+  .card.w3{grid-column:span 3}.card.w4{grid-column:span 4}.card.w6{grid-column:span 6}
+  .card-head{display:flex;align-items:center;gap:12px;background:none;border:none;color:var(--text);
+    font:inherit;cursor:pointer;padding:0;text-align:left;width:100%}
+  .card-head:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:8px}
+  .dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+  .dot.g{background:var(--green);box-shadow:0 0 12px rgba(48,209,90,.8)}
+  .dot.r{background:var(--red);box-shadow:0 0 12px rgba(255,69,58,.8)}
+  .card-title{font-size:17px;font-weight:600;flex:1 1 auto;min-width:0;letter-spacing:-0.01em}
+  .chev{flex:0 0 auto;color:var(--muted);font-size:18px;line-height:1;transition:transform .25s ease}
+  .card.open .chev{transform:rotate(90deg);color:var(--blue)}
+  .card-desc{font-size:15px;color:var(--muted);line-height:1.55;margin:0;overflow-wrap:break-word}
+  .card-desc b{color:var(--text);font-weight:600}
+  .card-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+  .card.open .card-body{grid-template-rows:1fr}
+  .card-body>div{overflow:hidden;min-height:0}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;padding-top:6px}
+  .chip{font-size:13px;background:var(--card2);border:1px solid rgba(255,255,255,.1);color:var(--text);
+    padding:7px 14px;border-radius:980px;transition:border-color .2s;overflow-wrap:anywhere;max-width:100%}
+  .chip:hover{border-color:var(--blue);text-decoration:none}
+  .chip small{color:var(--muted);font-size:11px;margin-left:6px}
+  .chip.core{border:1px solid transparent;
+    background:linear-gradient(var(--card2),var(--card2)) padding-box,var(--gh) border-box}
+  .chip.have{border-color:rgba(48,209,90,.45);color:#8ce8b2}
+  .chip.none{background:none;border-color:transparent;color:var(--muted);cursor:default}
+  .chip.none:hover{border-color:transparent}
+
+  /* critical path */
+  .path-sec{padding:100px 0 40px}
+  .path-sec .head{max-width:980px;margin:0 auto 24px;padding:0 24px}
+  .step{display:grid;grid-template-columns:80px 1fr;gap:28px;max-width:980px;margin:0 auto;padding:36px 24px;
+    border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .step .num{font-size:56px;font-weight:700;line-height:1;letter-spacing:-0.02em;color:var(--blue)}
+  @supports (-webkit-background-clip:text) or (background-clip:text){
+    .step .num{background:var(--gh);-webkit-background-clip:text;background-clip:text;
+      color:transparent;-webkit-text-fill-color:transparent}
+  }
+  .step h3{font-size:21px;margin:4px 0 8px;letter-spacing:-0.01em;font-weight:600}
+  .step p{font-size:16px;color:var(--muted);line-height:1.65;margin:0}
+  .step p b{color:var(--text);font-weight:600}
+
+  /* validation */
+  .valid{padding:100px 0 40px}
+  .vrow{max-width:980px;margin:0 auto;padding:32px 24px;border-bottom:1px solid var(--line)}
+  .vclaim{font-size:20px;font-weight:600;letter-spacing:-0.01em;margin:0 0 10px}
+  .vverdict{font-size:16px;color:var(--muted);line-height:1.65;margin:0}
+  .vverdict b{color:var(--text);font-weight:600}
+  .verdict{max-width:980px;margin:40px auto 0;padding:36px;background:var(--card);border-radius:24px;
+    font-size:17px;line-height:1.6}
+  .verdict .mark{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 12px rgba(48,209,90,.8);margin-right:12px;vertical-align:2px}
+  .cavs{max-width:980px;margin:24px auto 0}
+  .cavs h3{font-size:22px;letter-spacing:-0.01em;margin:0 0 20px}
+  .cav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .cav{background:var(--card);border-radius:24px;padding:28px}
+  .cav b{display:block;font-size:16px;margin:0 0 10px;letter-spacing:-0.01em}
+  .cav p{font-size:14.5px;color:var(--muted);line-height:1.6;margin:0}
+  .cav p i{color:var(--text)}
+
+  /* foot */
+  .foot{border-top:1px solid var(--line);margin-top:100px;padding:56px 24px calc(80px + env(safe-area-inset-bottom,0))}
+  .foot .inner{max-width:1200px;margin:0 auto}
+  .foot h3{font-size:15px;color:var(--text);letter-spacing:-0.01em;margin:0 0 14px}
+  .foot p{font-size:13px;color:var(--muted);line-height:1.7;margin:0 0 12px}
+  .backtop{font-size:13px;display:inline-block;margin-top:18px}
+
+  /* reveal — only hides content when JS is on (html.js set by the head script);
+     without JS the page is fully visible, never a black screen */
+  html.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+  html.js .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .card,.card.w3{grid-column:span 3}
+    .card.w4,.card.w6{grid-column:span 6}
+    .cav-grid{grid-template-columns:1fr}
+    .stats{gap:36px}
+  }
+  @media(max-width:640px){
+    .card,.card.w3,.card.w4,.card.w6{grid-column:span 6}
+    .nav-links a:not(.nav-cta){display:none}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:28px 0;max-width:340px;margin-left:auto;margin-right:auto}
+    .step{grid-template-columns:52px 1fr;gap:18px}
+    .step .num{font-size:40px}
+    .hero{padding:80px 20px 70px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    html.js .reveal{opacity:1;transform:none;transition:none}
+    .card,.card-head .chev,.chip,.card-body{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">Skill Tree</a>
+    <div class="nav-links">
+      <a href="#b1">Build</a>
+      <a href="#b2">Software</a>
+      <a href="#b3">Agents</a>
+      <a href="#b4">Shaping</a>
+      <a href="#path" class="nav-cta">Critical Path</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <p class="eyebrow">DeepLearning.AI &middot; 2026 Skills Map &times; Your Profile</p>
+  <h1>AI Engineer.<br><span class="grad">Skill Tree.</span></h1>
+  <p class="lede">Four branches, nineteen skills, mapped to you. <b>Green is yours already. Red is the leverage.</b>
+  Built from <b>Andrew Ng's AI Engineering Skills Map</b> (DeepLearning.AI, 2026) and his three-loops framework.
+  Gold chips are the core courses; every chip links to the live short course. Tap a card for its course list.</p>
+  <div class="cta">
+    <a class="btn primary" href="#path">Start the critical path</a>
+    <a class="btn text" href="#b1">Explore the four branches &rarr;</a>
+  </div>
+  <div class="stats">
+    <div><b>4</b><span>branches</span></div>
+    <div><b>19</b><span>skills</span></div>
+    <div><b>8</b><span>yours already</span></div>
+    <div><b>11</b><span>gaps to close</span></div>
+  </div>
+  <div class="detail-toggle">
+    <button id="openAll" type="button">Show all details</button>
+    <button id="closeAll" type="button">Hide all details</button>
+  </div>
+</header>
+
+<main>
+  <!-- BRANCH 1 -->
+  <section class="chapter g1" id="b1">
+    <div class="chapter-head reveal">
+      <div class="ghost" aria-hidden="true">01</div>
+      <p class="kicker">The AI-specific core</p>
+      <h2>Building &amp; Deploying AI Applications</h2>
+      <p class="tagline">Six sub-skills, from LLM foundations to production. The core of the role &mdash; and where your gaps concentrate.</p>
+    </div>
+    <div class="bento">
+      <article class="card w3 reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">1a &middot; LLM Foundations <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Tokenization, context windows, caching, reasoning effort, sampling, tool calling, knowledge cutoff &rarr; knowing when a model will fail. You run local inference on a 5090, so this is home turf; formalize the tradeoff reasoning.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip have" href="https://www.deeplearning.ai/courses/generative-ai-with-llms">GenAI with LLMs <small>AWS</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/reasoning-with-o1">Reasoning with o1</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/embedding-models-from-architecture-to-implementation">Embedding Models</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card w3 reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">1b &middot; Grounding Models with Data <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Prompt-context vs retrieval; vector index vs knowledge graph vs semantic layer; document&rarr;LLM pipeline engineering. Your specialty-mapper is exactly this &mdash; you build grounding pipelines for a living. You sit here today.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip have" href="https://www.deeplearning.ai/courses/retrieval-augmented-generation">RAG <small>core</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/advanced-retrieval-for-ai">Advanced Retrieval <small>Chroma</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/building-multimodal-search-and-rag">Multimodal Search &amp; RAG</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/document-ai-from-ocr-to-agentic-doc-extraction">Document AI: OCR&rarr;Agentic</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/agentic-knowledge-graph-construction">Agentic Knowledge Graphs</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">1c &middot; Building Agentic Systems <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Workflow vs agent-harness spectrum; tool/memory/context design; multi-agent orchestration; guardrails for production. Fast-moving: voice, computer-use, generative UI. You use agents daily but the <i>architecture judgment</i> is the named skill.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip core" href="https://www.deeplearning.ai/courses/agentic-ai">Agentic AI <small>Ng</small></a>
+          <a class="chip core" href="https://www.deeplearning.ai/courses/building-adaptive-ai-agents">Building Adaptive AI Agents <small>Oracle</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/long-term-agentic-memory-with-langgraph">Long-Term Agentic Memory <small>LangGraph</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/multi-ai-agent-systems-with-crewai">Multi-Agent Systems <small>crewAI</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/dspy-build-optimize-agentic-apps">DSPy: Build &amp; Optimize Agentic Apps</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/mcp-build-rich-context-ai-apps-with-anthropic">MCP: Rich-Context AI Apps</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/building-toward-computer-use-with-anthropic">Toward Computer Use</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/voice-for-ai-agents-and-applications">Voice for AI Agents</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card w4 reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">1d &middot; Evaluation-Driven Development <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc"><b>Ng's single most important sub-skill.</b> "The most important trait that distinguishes someone great at building AI systems is whether you can drive a disciplined evals/error-analysis loop." Exploratory error analysis &rarr; what to measure &rarr; deterministic vs LLM-judge vs human &rarr; evaluate your evals. You have eval truth (NUCC bijection) but the <i>loop discipline</i> is the named skill.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip core" href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents <small>Arize</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/fast-prototyping-of-genai-apps-with-streamlit">Fast Prototyping w/ Streamlit</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">1e &middot; Operating in Production <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Observability, drift detection, model-failure &amp; prompt-injection response, risk-calibrated regression/CI-CD, and the cost/latency/quality lever. <b>This is the serving/MLOps gap you already named as your weakness &mdash; and the FDE differentiator.</b></p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip have" href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM Inference <small>Red Hat</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/fast-llm-inference-with-cerebras">Fast Inference w/ Cerebras</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/build-ai-apps-with-mcp-server-working-with-box-files">MCP Server: Box Files</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card w4 reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">1f &middot; Machine Learning Foundations <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Bias/variance, error analysis, data engineering. "Modern LLMs are built with supervised + reinforcement learning" &mdash; you already own this from your DS/PyTorch background. No new course required; keep it warm.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip have" href="https://www.deeplearning.ai/courses/transformers-in-practice">Transformers in Practice <small>AMD</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/attention-in-transformers-concepts-and-code-in-pytorch">Attention in Transformers <small>StatQuest</small></a>
+        </div>
+        </div></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- BRANCH 2 -->
+  <section class="chapter g2" id="b2">
+    <div class="chapter-head reveal">
+      <div class="ghost" aria-hidden="true">02</div>
+      <p class="kicker">The anti-vibe-coding branch</p>
+      <h2>Software Engineering Fundamentals</h2>
+      <p class="tagline">Five areas that keep you in control of the agents. The substrate for everything else on the tree.</p>
+    </div>
+    <div class="bento">
+      <article class="card reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">2a &middot; Full-Stack Applications <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Front to back, data to API. Your strong Python/SQL base covers most of it; the AI-specific part is serving a model as an API (FastAPI) &mdash; the exact gap you flagged.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip" href="https://www.deeplearning.ai/courses/fast-prototyping-of-genai-apps-with-streamlit">Fast Prototyping w/ Streamlit</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows <small>Astronomer</small></a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">2b &middot; Data Management <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Data modeling, consistency, quality. Your SQL + data-science background is the strongest node in the whole tree. Keep it sharp; it's the substrate for grounding pipelines.</p>
+        <div class="card-body"><div>
+        <div class="chips"><span class="chip none">No course needed &mdash; you own this</span></div>
+        </div></div>
+      </article>
+      <article class="card reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">2c &middot; System Architecture <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">"When you understand the major components of the full stack of software and data, you are better positioned to decide how to put the pieces together." Boundaries, failure domains, state ownership. This is where FDE architecture judgment lives.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip" href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/pydantic-for-llm-workflows">Pydantic for LLM Workflows</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card w3 reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">2d &middot; Security &amp; Reliability <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Threat model, least privilege, data sensitivity, downstream authority. For AI: prompt injection, data exfiltration, sandboxing agents with permissions/gating. A production-incident skill, not a checkbox.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip" href="https://www.deeplearning.ai/courses/build-ai-apps-with-mcp-server-working-with-box-files">MCP: governed tool access</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review <small>Qodo</small></a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card w3 reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">2e &middot; Scaling &amp; Production Operations <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">SLOs, incidents, rollback, idempotency, cost attribution. The MLOps/LLMOps layer &mdash; your named weakness and the thing that separates an FDE who ships from one who demos.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip have" href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM Inference</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/fast-llm-inference-with-cerebras">Cerebras Inference</a>
+        </div>
+        </div></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- BRANCH 3 -->
+  <section class="chapter g3" id="b3">
+    <div class="chapter-head reveal">
+      <div class="ghost" aria-hidden="true">03</div>
+      <p class="kicker">Evolving fastest</p>
+      <h2>Using Coding Agents</h2>
+      <p class="tagline">Five sub-skills for working with the agents that write the code. The meta-layer of the modern stack.</p>
+    </div>
+    <div class="bento">
+      <article class="card reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">3a &middot; Directing the Workflow <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">The meta-skill: planning &rarr; execution &rarr; deployment; deciding human vs agent effort per step; when to iterate back; speed/cost/risk tradeoffs. You run Claude Code/Codex daily &mdash; you already do this, now make it explicit and deliberate.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development <small>JetBrains</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows <small>JetBrains</small></a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">3b &middot; Enabling Agent Autonomy <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Calibrating autonomy per task, managing context across phases, parallel agents + orchestration, safe permissions/gating. Ng: "set it and forget it" is overhyped; high-skill human intervention wins.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip" href="https://www.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant">Claude Code: Agentic Assistant</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">3c &middot; Reviewing the Work <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Designing behavioral + functional validation matched to the task; agents providing screenshots as evidence; eval sets + LLM-as-judge; agentic code review; AI security/architecture audits. The verification half is where most agent users are weak.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip core" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review <small>Qodo</small></a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents</a>
+        </div>
+        </div></div>
+      </article>
+      <article class="card w3 reveal have" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">3d &middot; Staying Current <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">"A continuous process of experimentation, building, and learning" &mdash; the tools change in strides. You already do this (you track the tooling). Systematize it: a weekly build-and-break habit.</p>
+        <div class="card-body"><div>
+        <div class="chips"><span class="chip none">Habit, not a course &mdash; you do this already</span></div>
+        </div></div>
+      </article>
+      <article class="card w3 reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">3e &middot; Knowing Failure Modes <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Where agents go off-track: an agent with unrestricted access wrecking a prod DB, context rot, overengineering, silent wrong assumptions. The named failure modes are the skill &mdash; recognize them before they cost you.</p>
+        <div class="card-body"><div>
+        <div class="chips">
+          <a class="chip" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a>
+          <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a>
+        </div>
+        </div></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- BRANCH 4 -->
+  <section class="chapter g4" id="b4">
+    <div class="chapter-head reveal">
+      <div class="ghost" aria-hidden="true">04</div>
+      <p class="kicker">Product judgment &middot; most career-defining</p>
+      <h2>Shaping the Build</h2>
+      <p class="tagline">Three skills with no course, because they're judgment, not knowledge. This is what the FDE career is actually selling.</p>
+    </div>
+    <div class="bento">
+      <article class="card w3 reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">4a &middot; Product Sense &amp; Business Context <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">"Engineers should no longer expect to be given a pixel-perfect design and asked only to implement it." The work shifts upstream to deciding what the spec should be. This is the FDE core &mdash; you live in the client's business problem, not the code.</p>
+        <div class="card-body"><div>
+        <div class="chips"><span class="chip none">No course &mdash; this is judgment built from client work</span></div>
+        </div></div>
+      </article>
+      <article class="card w3 reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">4b &middot; The Three Loops <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Ng's June 2026 framework: an inner <b>agentic coding loop</b> (minutes) wrapped by a slower <b>developer feedback loop</b>, wrapped by a <b>market/customer feedback loop</b> that decides what the inner loop should even build. Your moat is owning the outer two loops, not the inner one the agent runs.</p>
+        <div class="card-body"><div>
+        <div class="chips"><span class="chip none">Read: Ng's "three loops" letter (Jun 30 2026, The Batch)</span></div>
+        </div></div>
+      </article>
+      <article class="card w6 reveal gap" data-card>
+        <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">4c &middot; Judgment of Pace (MVP vs careful) <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
+        <p class="card-desc">Knowing when to ship a rough MVP to real users vs slow down and build carefully. The same tension as the three loops. This is the skill that compounds into seniority and into FDE pricing power. No course &mdash; deliberate practice on real builds.</p>
+        <div class="card-body"><div>
+        <div class="chips"><span class="chip none">No course &mdash; deliberate practice on real builds</span></div>
+        </div></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CRITICAL PATH -->
+  <section class="path-sec" id="path">
+    <div class="head reveal">
+      <p class="kicker" style="color:var(--blue)">Red gaps, in leverage order</p>
+      <h2>Your critical path.</h2>
+      <p class="tagline">You enter the tree already strong on 1a, 1b, 1f, 2a, 2b, 3a, 3b, 3d. The 11 nodes below are where you invest. Ng's own ordering inside Branch 1: get LLM foundations solid, then build the <b style="color:var(--text)">evals loop before</b> you scale grounding, agents, or production complexity. The first three steps do exactly that.</p>
+    </div>
+    <div class="step reveal"><div class="num" aria-hidden="true">1</div><div>
+      <h3>Evaluation-Driven Development <span style="color:var(--muted);font-weight:400">(1d)</span></h3>
+      <p>Ng's #1 sub-skill. Take <a href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents</a>. You have eval truth; build the loop discipline. Everything else is steerable only if this exists.</p>
+    </div></div>
+    <div class="step reveal"><div class="num" aria-hidden="true">2</div><div>
+      <h3>Agentic Systems architecture <span style="color:var(--muted);font-weight:400">(1c)</span></h3>
+      <p><a href="https://www.deeplearning.ai/courses/agentic-ai">Agentic AI</a> + <a href="https://www.deeplearning.ai/courses/building-adaptive-ai-agents">Building Adaptive AI Agents</a>. Move from using agents to choosing where on the workflow&harr;harness spectrum a problem lives.</p>
+    </div></div>
+    <div class="step reveal"><div class="num" aria-hidden="true">3</div><div>
+      <h3>Production / LLM serving <span style="color:var(--muted);font-weight:400">(1e + 2e)</span></h3>
+      <p>Your named MLOps gap. <a href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM</a> (you know) + observability, drift, cost/latency lever. This is the FDE moat: you can ship, not just demo.</p>
+    </div></div>
+    <div class="step reveal"><div class="num" aria-hidden="true">4</div><div>
+      <h3>System Architecture + Security <span style="color:var(--muted);font-weight:400">(2c + 2d)</span></h3>
+      <p>Boundaries, failure domains, prompt-injection, sandboxing. <a href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows</a> + <a href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a>.</p>
+    </div></div>
+    <div class="step reveal"><div class="num" aria-hidden="true">5</div><div>
+      <h3>Reviewing agent work + failure modes <span style="color:var(--muted);font-weight:400">(3c + 3e)</span></h3>
+      <p><a href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a> + <a href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a>. The verification half where most agent users are weak.</p>
+    </div></div>
+    <div class="step reveal"><div class="num" aria-hidden="true">6</div><div>
+      <h3>Shaping the build <span style="color:var(--muted);font-weight:400">(4a&ndash;4c)</span></h3>
+      <p>No course &mdash; this is judgment. Read the three-loops letter; deliberately own the market + developer loops on every build. This is what your FDE career is actually selling.</p>
+    </div></div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section class="valid" id="validation">
+    <div class="head reveal" style="max-width:980px;margin:0 auto 24px;padding:0 24px">
+      <p class="kicker" style="color:var(--blue)">Checked against the primary sources</p>
+      <h2>Does this protect the career?</h2>
+      <p class="tagline">Five claims, each verified against Ng's posts and independent coverage. All checked 2026-09-10.</p>
+    </div>
+    <div class="vrow reveal"><p class="vclaim">Is the 4-branch structure real and current?</p>
+      <p class="vverdict"><b>Yes &mdash; verified primary + 3 independent.</b> Ng published the map Aug 14 2026 (X post 2088302050706686198), with Part 1 (Aug 21, X 2090840747738374568), Part 2 software-fundamentals (Aug 28), and coding-agents (Sep 4). Corroborated by The Batch, TrueFoundry, and explainx.ai. Not a single-source rumor.</p></div>
+    <div class="vrow reveal"><p class="vclaim">Is it grounded in evidence, not opinion?</p>
+      <p class="vverdict"><b>Yes.</b> Ng's stated method: 10,000+ job postings + structured expert/hiring-manager interviews + survey data, "akin to clustering a massive dataset." He explicitly targets skills durable "as the tooling changes underneath them" &mdash; the future-proofing you asked about is the framework's stated design goal.</p></div>
+    <div class="vrow reveal"><p class="vclaim">Does it match YOUR actual gap?</p>
+      <p class="vverdict"><b>Yes, strikingly.</b> Ng's map says the scarce, durable skills are (i) statistical evals to govern unpredictable systems, (ii) software fundamentals to steer agents, (iii) product judgment. Your self-reported weakness is serving/MLOps/APIs/deployment = nodes 1e/2e. Your strength (data/SQL/ML) = the nodes the map says are becoming <i>table stakes</i>, not differentiators. The tree points you at exactly the gap you already feel.</p></div>
+    <div class="vrow reveal"><p class="vclaim">Is "AI Engineer" a real, hireable role?</p>
+      <p class="vverdict"><b>Yes, but with a nuance.</b> Ng deliberately frames these as skills <i>every</i> developer needs (like cloud), not a title. He also names the FDE role explicitly ("an engineer embedded within a client organization to help customize solutions... building and tuning agentic workflows"). Your DS&rarr;AI Eng&rarr;FDE path is the one the map endorses. The map does <b>not</b> say "get the AI Engineer title" &mdash; it says build the four skills, which is a stronger, more durable claim.</p></div>
+    <div class="vrow reveal"><p class="vclaim">Does it protect you from AI eating the job?</p>
+      <p class="vverdict"><b>Partially &mdash; it's the right map, but read the caveats below.</b> The map's own logic is that code-generation is the part commoditizing fastest; the scarce parts are judgment about tradeoffs, priorities, and pace. That is precisely 2c/2d and all of Branch 4. So the tree protects you <i>if you weight Branch 4 and the production nodes</i> over "learn more prompting." It will not protect you if you treat it as a course checklist and stop there &mdash; the map is a self-audit, not a reading list.</p></div>
+    <div class="verdict reveal"><span class="mark" aria-hidden="true"></span><b>Bottom line:</b> The tree is a faithful, current, multi-source-verified rendering of Ng's actual framework, and it independently converges on the exact serving/MLOps gap you already identified. It is a sound career-defense map <i>for the AI-engineer track</i>.</div>
+    <div class="cavs reveal">
+      <h3>Three honest caveats the map won't tell you</h3>
+      <div class="cav-grid">
+        <div class="cav"><b>It's US/Silicon-Valley job-market data.</b><p>10k postings skew to the roles most advertised, so it over-weights what's hireable <i>now</i> and under-weights 3&ndash;5yr structure. Good for the next 12&ndash;24 months, not a decade.</p></div>
+        <div class="cav"><b>Branch 4 has no course.</b><p>Because it's judgment, not knowledge &mdash; you can't "complete" it, you can only practice it on real client work. If you only do the course nodes, you'll be a strong implementer, not a durable one.</p></div>
+        <div class="cav"><b>Nobody's map is a moat by itself.</b><p>The durable protection is the <i>combination</i>: your domain (provider data/network mgmt) + the four skills + the FDE model of owning the outer two loops. The tree gets you the skills; the domain + FDE model is what makes them hard to replace. Keep the local-inference edge too &mdash; it's a real differentiator for the serving layer the map says is scarce.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="inner">
+    <h3>Sources</h3>
+    <p>Ng, "AI Engineering Skills Map" X post 2088302050706686198 (Aug 14 2026) &middot; "Building &amp; Deploying AI Applications" X 2090840747738374568 (Aug 21) &middot; "Software engineering fundamentals" X 2093388974194872781 (Aug 28) &middot; coding-agents follow-up (Sep 4) via explainx.ai.
+    DeepLearning.AI The Batch "The AI Engineering Skills Map" &middot; TrueFoundry "Andrew Ng's AI Engineering Skills Map" (Sep 1 2026) &middot; explainx.ai "4 Skills" (Aug 15) + "6 Sub-Skills" (Aug 22) + "3 Loops" (Jun 30) &middot;
+    Course catalog scraped live from deeplearning.ai/courses (47 short courses, 2026-09-10).
+    Node status (green/red) is <b style="color:var(--text)">a mapping of your profile</b>, not from Ng. All sources checked 2026-09-10.</p>
+    <a class="backtop" href="#top">Back to top &uarr;</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setCardOpen(c, open){
+    c.classList.toggle('open', open);
+    var b = c.querySelector('.card-head');
+    if(b) b.setAttribute('aria-expanded', String(open));
+  }
+  var cards = Array.prototype.slice.call(document.querySelectorAll('[data-card]'));
+  cards.forEach(function(c){
+    // whole card is the tap target (better on touch); links inside are excluded
+    c.addEventListener('click', function(e){
+      if(e.target.closest('a')) return;
+      setCardOpen(c, !c.classList.contains('open'));
+    });
+  });
+  // gaps open by default — the action items; "have" cards stay quiet
+  cards.forEach(function(c){ if(c.classList.contains('gap')) setCardOpen(c, true); });
+
+  function setAll(open){ cards.forEach(function(c){ setCardOpen(c, open); }); }
+  var oa = document.getElementById('openAll'), ca = document.getElementById('closeAll');
+  if(oa) oa.addEventListener('click', function(){ setAll(true); });
+  if(ca) ca.addEventListener('click', function(){ setAll(false); });
+
+  // scroll reveal (progressive enhancement: if anything here fails, a safety
+  // timer forces everything visible — the page is never left black)
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  function showAll(){ els.forEach(function(e){ e.classList.add('in'); }); }
+  var revealed = false;
+  function reveal(){
+    if(revealed) return;
+    revealed = true;
+    showAll();
+  }
+  if(reduce || !('IntersectionObserver' in window)){
+    reveal();
+  } else {
+    try{
+      document.querySelectorAll('.bento').forEach(function(g){
+        Array.prototype.forEach.call(g.children, function(ch, i){
+          ch.style.transitionDelay = (i % 6) * 70 + 'ms';
+        });
+      });
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){
+            en.target.classList.add('in');
+            en.target.addEventListener('transitionend', function(){ en.target.style.transitionDelay = '0ms'; }, {once:true});
+            io.unobserve(en.target);
+          }
+        });
+        if(els.every(function(e){ return e.classList.contains('in'); })) reveal();
+      }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+      els.forEach(function(e){ io.observe(e); });
+      setTimeout(reveal, 4000); // safety net: if the observer never fires, show everything
+    }catch(err){
+      reveal();
+    }
+  }
+
+  // scroll progress
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>
