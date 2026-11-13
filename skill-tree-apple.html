@@ -130,6 +130,29 @@
   .chip.none{background:none;border-color:transparent;color:var(--muted);cursor:default}
   .chip.none:hover{border-color:transparent}
 
+
+  /* branch tree */
+  .branch-toggle{cursor:pointer;touch-action:manipulation}
+  .branch-toggle:focus-visible{outline:2px solid var(--blue);outline-offset:6px;border-radius:10px}
+  .bchev{display:block;margin-top:16px;color:var(--muted);font-size:14px;font-weight:600;letter-spacing:.01em}
+  .bchev .e{display:none}
+  .chapter.closed .bchev .c{display:none}
+  .chapter.closed .bchev .e{display:inline}
+  .branch-body{max-width:1200px;margin:0 auto;display:grid;grid-template-rows:1fr;transition:grid-template-rows .35s ease}
+  .chapter.closed .branch-body{grid-template-rows:0fr}
+  .branch-body>.tree{overflow:hidden;min-height:0}
+  .chapter.closed>.branch-body>.tree{padding-top:0;padding-bottom:0}
+  .tree{max-width:1010px;margin:0 auto;padding:12px 24px 40px 70px}
+  .g1{--tl:rgba(41,151,255,.5)} .g2{--tl:rgba(48,209,90,.5)}
+  .g3{--tl:rgba(191,90,242,.5)} .g4{--tl:rgba(255,159,10,.5)}
+  .tree .card{position:relative;width:100%;margin:0 0 18px}
+  .tree .card:last-child{margin-bottom:0}
+  .tree .card::before{content:'';position:absolute;left:-32px;top:-18px;bottom:-18px;width:2px;background:var(--tl);border-radius:2px}
+  .tree .card:first-child::before{top:-26px}
+  .tree .card:last-child::before{bottom:auto;height:30px}
+  .tree .card::after{content:'';position:absolute;left:-32px;top:27px;width:30px;height:2px;background:var(--tl);border-radius:2px}
+  .tree .card>i.join{position:absolute;left:-8px;top:22px;width:12px;height:12px;border-radius:50%;
+    background:var(--card2);border:2px solid var(--tl);z-index:2}
   /* critical path */
   .path-sec{padding:100px 0 40px}
   .path-sec .head{max-width:980px;margin:0 auto 24px;padding:0 24px}
@@ -183,6 +206,10 @@
   }
   @media(max-width:640px){
     .card,.card.w3,.card.w4,.card.w6{grid-column:span 6}
+    .tree{padding-left:48px}
+    .tree .card::before{left:-24px}
+    .tree .card::after{left:-24px;width:22px}
+    .tree .card>i.join{left:-16px}
     .nav-links a:not(.nav-cta){display:none}
     .stats{display:grid;grid-template-columns:1fr 1fr;gap:28px 0;max-width:340px;margin-left:auto;margin-right:auto}
     .step{grid-template-columns:52px 1fr;gap:18px}
@@ -192,7 +219,7 @@
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto}
     html.js .reveal{opacity:1;transform:none;transition:none}
-    .card,.card-head .chev,.chip,.card-body{transition:none}
+    .card,.card-head .chev,.chip,.card-body,.branch-body{transition:none}
   }
 </style>
 </head>
@@ -215,18 +242,18 @@
 <header class="hero" id="top">
   <p class="eyebrow">DeepLearning.AI &middot; 2026 Skills Map &times; Your Profile</p>
   <h1>AI Engineer.<br><span class="grad">Skill Tree.</span></h1>
-  <p class="lede">Four branches, nineteen skills, mapped to you. <b>Green is yours already. Red is the leverage.</b>
+  <p class="lede">Four branches, twenty skills, mapped to you. <b>Green is yours already. Red is the leverage.</b>
   Built from <b>Andrew Ng's AI Engineering Skills Map</b> (DeepLearning.AI, 2026) and his three-loops framework.
-  Gold chips are the core courses; every chip links to the live short course. Tap a card for its course list.</p>
+  Gold chips are the core courses; every chip links to the live short course. Tap a card for its course list; tap a branch header to collapse it.</p>
   <div class="cta">
     <a class="btn primary" href="#path">Start the critical path</a>
     <a class="btn text" href="#b1">Explore the four branches &rarr;</a>
   </div>
   <div class="stats">
     <div><b>4</b><span>branches</span></div>
-    <div><b>19</b><span>skills</span></div>
-    <div><b>8</b><span>yours already</span></div>
-    <div><b>11</b><span>gaps to close</span></div>
+    <div><b>20</b><span>skills</span></div>
+    <div><b>7</b><span>yours already</span></div>
+    <div><b>13</b><span>gaps to close</span></div>
   </div>
   <div class="detail-toggle">
     <button id="openAll" type="button">Show all details</button>
@@ -238,13 +265,16 @@
   <!-- BRANCH 1 -->
   <section class="chapter g1" id="b1">
     <div class="chapter-head reveal">
+      <div class="branch-toggle" role="button" tabindex="0" aria-expanded="true" data-branch-toggle>
       <div class="ghost" aria-hidden="true">01</div>
       <p class="kicker">The AI-specific core</p>
       <h2>Building &amp; Deploying AI Applications</h2>
       <p class="tagline">Six sub-skills, from LLM foundations to production. The core of the role &mdash; and where your gaps concentrate.</p>
+        <span class="bchev" aria-hidden="true"><span class="c">Collapse branch &#9662;</span><span class="e">Expand branch &#9656;</span></span>
+      </div>
     </div>
-    <div class="bento">
-      <article class="card w3 reveal have" data-card>
+    <div class="branch-body"><div class="tree">
+      <article class="card w3 reveal have" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">1a &middot; LLM Foundations <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Tokenization, context windows, caching, reasoning effort, sampling, tool calling, knowledge cutoff &rarr; knowing when a model will fail. You run local inference on a 5090, so this is home turf; formalize the tradeoff reasoning.</p>
         <div class="card-body"><div>
@@ -255,7 +285,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card w3 reveal have" data-card>
+      <article class="card w3 reveal have" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">1b &middot; Grounding Models with Data <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Prompt-context vs retrieval; vector index vs knowledge graph vs semantic layer; document&rarr;LLM pipeline engineering. Your specialty-mapper is exactly this &mdash; you build grounding pipelines for a living. You sit here today.</p>
         <div class="card-body"><div>
@@ -268,7 +298,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card reveal gap" data-card>
+      <article class="card reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">1c &middot; Building Agentic Systems <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Workflow vs agent-harness spectrum; tool/memory/context design; multi-agent orchestration; guardrails for production. Fast-moving: voice, computer-use, generative UI. You use agents daily but the <i>architecture judgment</i> is the named skill.</p>
         <div class="card-body"><div>
@@ -284,7 +314,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card w4 reveal gap" data-card>
+      <article class="card w4 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">1d &middot; Evaluation-Driven Development <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc"><b>Ng's single most important sub-skill.</b> "The most important trait that distinguishes someone great at building AI systems is whether you can drive a disciplined evals/error-analysis loop." Exploratory error analysis &rarr; what to measure &rarr; deterministic vs LLM-judge vs human &rarr; evaluate your evals. You have eval truth (NUCC bijection) but the <i>loop discipline</i> is the named skill.</p>
         <div class="card-body"><div>
@@ -294,7 +324,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card reveal gap" data-card>
+      <article class="card reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">1e &middot; Operating in Production <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Observability, drift detection, model-failure &amp; prompt-injection response, risk-calibrated regression/CI-CD, and the cost/latency/quality lever. <b>This is the serving/MLOps gap you already named as your weakness &mdash; and the FDE differentiator.</b></p>
         <div class="card-body"><div>
@@ -305,7 +335,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card w4 reveal have" data-card>
+      <article class="card w4 reveal have" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">1f &middot; Machine Learning Foundations <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Bias/variance, error analysis, data engineering. "Modern LLMs are built with supervised + reinforcement learning" &mdash; you already own this from your DS/PyTorch background. No new course required; keep it warm.</p>
         <div class="card-body"><div>
@@ -315,19 +345,23 @@
         </div>
         </div></div>
       </article>
+      </div>
     </div>
   </section>
 
   <!-- BRANCH 2 -->
   <section class="chapter g2" id="b2">
     <div class="chapter-head reveal">
+      <div class="branch-toggle" role="button" tabindex="0" aria-expanded="true" data-branch-toggle>
       <div class="ghost" aria-hidden="true">02</div>
       <p class="kicker">The anti-vibe-coding branch</p>
       <h2>Software Engineering Fundamentals</h2>
       <p class="tagline">Five areas that keep you in control of the agents. The substrate for everything else on the tree.</p>
+        <span class="bchev" aria-hidden="true"><span class="c">Collapse branch &#9662;</span><span class="e">Expand branch &#9656;</span></span>
+      </div>
     </div>
-    <div class="bento">
-      <article class="card reveal have" data-card>
+    <div class="branch-body"><div class="tree">
+      <article class="card reveal have" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">2a &middot; Full-Stack Applications <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Front to back, data to API. Your strong Python/SQL base covers most of it; the AI-specific part is serving a model as an API (FastAPI) &mdash; the exact gap you flagged.</p>
         <div class="card-body"><div>
@@ -337,14 +371,14 @@
         </div>
         </div></div>
       </article>
-      <article class="card reveal have" data-card>
+      <article class="card reveal have" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">2b &middot; Data Management <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Data modeling, consistency, quality. Your SQL + data-science background is the strongest node in the whole tree. Keep it sharp; it's the substrate for grounding pipelines.</p>
         <div class="card-body"><div>
         <div class="chips"><span class="chip none">No course needed &mdash; you own this</span></div>
         </div></div>
       </article>
-      <article class="card reveal gap" data-card>
+      <article class="card reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">2c &middot; System Architecture <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">"When you understand the major components of the full stack of software and data, you are better positioned to decide how to put the pieces together." Boundaries, failure domains, state ownership. This is where FDE architecture judgment lives.</p>
         <div class="card-body"><div>
@@ -354,7 +388,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card w3 reveal gap" data-card>
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">2d &middot; Security &amp; Reliability <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Threat model, least privilege, data sensitivity, downstream authority. For AI: prompt injection, data exfiltration, sandboxing agents with permissions/gating. A production-incident skill, not a checkbox.</p>
         <div class="card-body"><div>
@@ -364,7 +398,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card w3 reveal gap" data-card>
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">2e &middot; Scaling &amp; Production Operations <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">SLOs, incidents, rollback, idempotency, cost attribution. The MLOps/LLMOps layer &mdash; your named weakness and the thing that separates an FDE who ships from one who demos.</p>
         <div class="card-body"><div>
@@ -374,19 +408,23 @@
         </div>
         </div></div>
       </article>
+      </div>
     </div>
   </section>
 
   <!-- BRANCH 3 -->
   <section class="chapter g3" id="b3">
     <div class="chapter-head reveal">
+      <div class="branch-toggle" role="button" tabindex="0" aria-expanded="true" data-branch-toggle>
       <div class="ghost" aria-hidden="true">03</div>
       <p class="kicker">Evolving fastest</p>
       <h2>Using Coding Agents</h2>
       <p class="tagline">Five sub-skills for working with the agents that write the code. The meta-layer of the modern stack.</p>
+        <span class="bchev" aria-hidden="true"><span class="c">Collapse branch &#9662;</span><span class="e">Expand branch &#9656;</span></span>
+      </div>
     </div>
-    <div class="bento">
-      <article class="card reveal have" data-card>
+    <div class="branch-body"><div class="tree">
+      <article class="card reveal have" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">3a &middot; Directing the Workflow <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">The meta-skill: Ng's agent workflow is <b>planning</b> (brainstorming, spec, execution plan) &rarr; <b>execution</b> (build, test, verify) &rarr; <b>deployment &amp; monitoring</b>. Deciding human vs agent effort per step, when to iterate back to an earlier step, how to decompose the work into verifiable steps, and when to retain human ownership of critical work. You run Claude Code/Codex daily &mdash; you already do this, now make it explicit and deliberate. This branch is Ng's fastest-moving: keeping up is &ldquo;a continuous process of experimentation, building, and learning.&rdquo;</p>
         <div class="card-body"><div>
@@ -396,7 +434,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card reveal have" data-card>
+      <article class="card reveal have" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot g" aria-hidden="true"></span><span class="card-title">3b &middot; Enabling Agent Autonomy <span class="sr">you already have this</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Choosing the autonomy level: watch interactively, delegate a larger chunk, or set a goal and let it loop until it succeeds. Managing context as phases change &mdash; capturing learnings, user feedback, and assumptions that shifted mid-build. Orchestrating parallel agents and managing human attention across sessions. Running agents safely: permissions and gated actions. Ng: the utility of very long-horizon autonomous runs has been &ldquo;amplified beyond reality&rdquo; &mdash; high-skill human intervention wins.</p>
         <div class="card-body"><div>
@@ -406,7 +444,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card reveal gap" data-card>
+      <article class="card reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">3c &middot; Reviewing the Work <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Designing behavioral + functional validation matched to the task; agents providing screenshots as evidence; eval sets + LLM-as-judge; agentic code review; AI security/architecture audits. The verification half is where most agent users are weak.</p>
         <div class="card-body"><div>
@@ -416,7 +454,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card w3 reveal gap" data-card>
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">3d &middot; Customizing the Agent &amp; Its Environment <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Ng's named fourth sub-skill: integrating agent skills, plugins, and MCP servers (and pruning them when a new model obsoletes them); hooks to automate repeatable steps like code review and CI/CD; maintaining standing context (AGENTS.md / CLAUDE.md); preserving state across sessions and parallel agents; accumulating learnings via retrospectives; keeping the codebase navigable to agents; clearing agent-generated debt; coordinating context across a team's agents.</p>
         <div class="card-body"><div>
@@ -426,7 +464,7 @@
         </div>
         </div></div>
       </article>
-      <article class="card w3 reveal gap" data-card>
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">3e &middot; Coding Agent Foundations <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Ng's named fifth sub-skill: how agents actually work &mdash; codebase search/retrieval, context-window management, how tool calls and MCP servers consume context, agents &harr; subagents, the harness around the LLM. That's what lets you recognize failure modes (overengineering, losing rigor without explicit verification, stopping short, risky file/prod-data actions) and steer with the right context.</p>
         <div class="card-body"><div>
@@ -436,19 +474,23 @@
         </div>
         </div></div>
       </article>
+      </div>
     </div>
   </section>
 
   <!-- BRANCH 4 -->
   <section class="chapter g4" id="b4">
     <div class="chapter-head reveal">
+      <div class="branch-toggle" role="button" tabindex="0" aria-expanded="true" data-branch-toggle>
       <div class="ghost" aria-hidden="true">04</div>
       <p class="kicker">4 sub-skills &middot; most career-defining</p>
       <h2>Shaping the Build</h2>
       <p class="tagline">Four skills with no course, because they're judgment, not knowledge. This is what the FDE career is actually selling.</p>
+        <span class="bchev" aria-hidden="true"><span class="c">Collapse branch &#9662;</span><span class="e">Expand branch &#9656;</span></span>
+      </div>
     </div>
-    <div class="bento">
-      <article class="card w3 reveal gap" data-card>
+    <div class="branch-body"><div class="tree">
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">4a &middot; Driving the Build Loop <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Ng's first shaping skill: most software is built in a loop &mdash; write code, get feedback, decide the next step &mdash; driven at AI velocity with a bias for action. Prototype vs MVP vs features vs enterprise-grade investment; ship in small batches; when to get user feedback vs run a technical experiment; product vision, project stage, feasibility, risk, effort, budget; key metrics and project management on mature projects. The MVP-vs-careful pace call lives here &mdash; and compounds into FDE pricing power.</p>
         <div class="card-body"><div>
@@ -456,27 +498,28 @@
           <span class="chip none">Cross-read: Ng's &ldquo;three loops&rdquo; letter (issue-359, Jun 26 2026): agentic coding &rarr; developer feedback &rarr; external feedback</span></div>
         </div></div>
       </article>
-      <article class="card w3 reveal gap" data-card>
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">4b &middot; Making Product Decisions <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Ng: &ldquo;Engineers should no longer expect to be given a pixel-perfect design and asked only to implement it.&rdquo; Decisions the spec doesn't cover; develop a spec when there is none. Product sense for real user needs; basic design sense; basic business sense (GTM, market size, unit economics, P&amp;L). User empathy honed via 2&ndash;3 interviews, surveys, A/B tests, behavior at scale. This is the FDE core &mdash; you live in the client's business problem, not the code.</p>
         <div class="card-body"><div>
         <div class="chips"><span class="chip none">No course &mdash; judgment built from client work</span></div>
         </div></div>
       </article>
-      <article class="card w3 reveal gap" data-card>
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">4c &middot; Communicating &amp; Leading <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Ng's third shaping skill: your scope expands past engineering into the functions around the project &mdash; marketing, finance, legal. Aligning stakeholders moves the project more than code; communication is also how you talk with users to hone empathy. And since everyone outside engineering is trying to understand AI, your technical judgment lets you explain what's feasible and lead the broader organization forward.</p>
         <div class="card-body"><div>
         <div class="chips"><span class="chip none">No course &mdash; judgment built from client work</span></div>
         </div></div>
       </article>
-      <article class="card w3 reveal gap" data-card>
+      <article class="card w3 reveal gap" data-card><i class="join" aria-hidden="true"></i>
         <button class="card-head" type="button" aria-expanded="false"><span class="dot r" aria-hidden="true"></span><span class="card-title">4d &middot; High-Agency Ownership <span class="sr">your gap</span></span><span class="chev" aria-hidden="true">&rsaquo;</span></button>
         <p class="card-desc">Ng's fourth shaping skill: many people &mdash; executives included &mdash; don't know what AI can do, opening the door for an engineer to spot problems, propose solutions, and execute without waiting for top-down direction (while respecting org priorities and constraints). Own initiatives end-to-end: accountability, ambiguity, setbacks, measured by value created not tasks completed. Plus keep investing in your skills &mdash; track the frontier, new tools, tuned workflows.</p>
         <div class="card-body"><div>
         <div class="chips"><span class="chip none">No course &mdash; judgment built from client work</span></div>
         </div></div>
       </article>
+      </div>
     </div>
   </section>
 
@@ -573,6 +616,24 @@
   // gaps open by default — the action items; "have" cards stay quiet
   cards.forEach(function(c){ if(c.classList.contains('gap')) setCardOpen(c, true); });
 
+  // branch collapse
+  document.querySelectorAll('[data-branch-toggle]').forEach(function(t){
+    var sec = t.closest('section.chapter');
+    function toggle(){ var closed = sec.classList.toggle('closed'); t.setAttribute('aria-expanded', String(!closed)); }
+    t.addEventListener('click', function(e){ if(e.target.closest('a')) return; toggle(); });
+    t.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+  });
+  // nav/hash links re-open a collapsed branch
+  document.querySelectorAll('a[href^="#b"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var s = document.querySelector(a.getAttribute('href'));
+      if(s && s.classList.contains('closed')){
+        s.classList.remove('closed');
+        var t = s.querySelector('[data-branch-toggle]'); if(t) t.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
   function setAll(open){ cards.forEach(function(c){ setCardOpen(c, open); }); }
   var oa = document.getElementById('openAll'), ca = document.getElementById('closeAll');
   if(oa) oa.addEventListener('click', function(){ setAll(true); });
@@ -592,7 +653,7 @@
     reveal();
   } else {
     try{
-      document.querySelectorAll('.bento').forEach(function(g){
+      document.querySelectorAll('.tree').forEach(function(g){
         Array.prototype.forEach.call(g.children, function(ch, i){
           ch.style.transitionDelay = (i % 6) * 70 + 'ms';
         });
