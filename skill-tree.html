@@ -273,7 +273,7 @@
         <div class="node have">
           <button class="nhead" type="button" aria-expanded="false"><span class="tt">3a &middot; Directing the Workflow <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
           <div class="nbody"><div class="ninner">
-          <p>The meta-skill: planning &rarr; execution &rarr; deployment; deciding human vs agent effort per step; when to iterate back; speed/cost/risk tradeoffs. You run Claude Code/Codex daily &mdash; you already do this, now make it explicit and deliberate.</p>
+          <p>The meta-skill: Ng's agent workflow is <b>planning</b> (brainstorming, spec, execution plan) &rarr; <b>execution</b> (build, test, verify) &rarr; <b>deployment &amp; monitoring</b>. Deciding human vs agent effort per step, when to iterate back to an earlier step, how to decompose the work into verifiable steps, and when to retain human ownership of critical work. You run Claude Code/Codex daily &mdash; you already do this, now make it explicit and deliberate. This branch is Ng's fastest-moving: keeping up is &ldquo;a continuous process of experimentation, building, and learning.&rdquo;</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development <small>JetBrains</small></a>
             <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows <small>JetBrains</small></a>
@@ -283,7 +283,7 @@
         <div class="node have">
           <button class="nhead" type="button" aria-expanded="false"><span class="tt">3b &middot; Enabling Agent Autonomy <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
           <div class="nbody"><div class="ninner">
-          <p>Calibrating autonomy per task, managing context across phases, parallel agents + orchestration, safe permissions/gating. Ng: "set it and forget it" is overhyped; high-skill human intervention wins.</p>
+          <p>Choosing the autonomy level: watch interactively, delegate a larger chunk, or set a goal and let it loop until it succeeds. Managing context as phases change &mdash; capturing learnings, user feedback, and assumptions that shifted mid-build. Orchestrating parallel agents and managing human attention across sessions. Running agents safely: permissions and gated actions. Ng: the utility of very long-horizon autonomous runs has been &ldquo;amplified beyond reality&rdquo; &mdash; high-skill human intervention wins.</p>
           <div class="chips">
             <a class="chip" href="https://www.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant">Claude Code: Agentic Assistant</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/ai-coding-workflows-from-cloud-to-local">AI Coding Workflows</a>
@@ -300,20 +300,23 @@
           </div>
           </div></div>
         </div>
-        <div class="node have">
-          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3d &middot; Staying Current <span class="tag have">have</span></span><span class="chev">&#9656;</span></button>
+        <div class="node gap">
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3d &middot; Customizing the Agent &amp; Its Environment <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
           <div class="nbody"><div class="ninner">
-          <p>"A continuous process of experimentation, building, and learning" &mdash; the tools change in strides. You already do this (you track the tooling). Systematize it: a weekly build-and-break habit.</p>
-          <div class="chips"><span class="chip have" style="cursor:default">Habit, not a course &mdash; you do this already</span></div>
+          <p>Ng's named fourth sub-skill: integrating agent <b>skills, plugins, and MCP servers</b> (and pruning them when a new model obsoletes them); <b>hooks</b> to automate repeatable steps like code review and CI/CD; maintaining <b>standing context</b> (AGENTS.md / CLAUDE.md) on the codebase, architecture, style, and data access; preserving state across sessions and parallel agents; accumulating learnings via post-run retrospectives; keeping codebase conventions navigable to agents; clearing agent-generated debt; coordinating context across a team's agents.</p>
+          <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/mcp-build-rich-context-ai-apps-with-anthropic">MCP: Rich-Context AI Apps</a>
+            <a class="chip" href="https://www.deeplearning.ai/courses/building-adaptive-ai-agents">Building Adaptive AI Agents <small>Oracle</small></a>
+          </div>
           </div></div>
         </div>
         <div class="node gap">
-          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3e &middot; Knowing Failure Modes <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">3e &middot; Coding Agent Foundations <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
           <div class="nbody"><div class="ninner">
-          <p>Where agents go off-track: an agent with unrestricted access wrecking a prod DB, context rot, overengineering, silent wrong assumptions. The named failure modes are the skill &mdash; recognize them before they cost you.</p>
+          <p>Ng's named fifth sub-skill: knowing how agents actually work &mdash; codebase search/retrieval, context-window management, how tool calls and MCP servers consume context, how agents and subagents interact, the harness wrapped around an LLM. That's what lets you recognize failure modes (overengineering, losing rigor without explicit verification, stopping short of the goal, actions that risk files or production data), reason about agent state, and steer with the right prescription or context.</p>
           <div class="chips">
+            <a class="chip" href="https://www.deeplearning.ai/courses/claude-code-a-highly-agentic-coding-assistant">Claude Code: Agentic Assistant</a>
             <a class="chip" href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a>
-            <a class="chip" href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a>
           </div>
           </div></div>
         </div>
@@ -324,27 +327,37 @@
     <div class="branch b4" data-branch>
       <header role="button" tabindex="0" aria-expanded="true" onclick="tg(this)" onkeydown="tk(event,this)">
         <span class="ic"></span><h2>4 &middot; Shaping the Build</h2>
-        <span class="lvl">product judgment &middot; most career-defining</span></header>
+        <span class="lvl">4 sub-skills &middot; most career-defining</span></header>
       <div class="body">
         <div class="node gap">
-          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4a &middot; Product Sense &amp; Business Context <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4a &middot; Driving the Build Loop <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
           <div class="nbody"><div class="ninner">
-          <p>"Engineers should no longer expect to be given a pixel-perfect design and asked only to implement it." The work shifts upstream to deciding what the spec should be. This is the FDE core &mdash; you live in the client's business problem, not the code.</p>
-          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; this is judgment built from client work</span></div>
+          <p>Ng's first shaping skill: most software is built in a loop &mdash; write code, get feedback, decide the next step &mdash; and a skilled engineer drives it at AI velocity with a bias for action. Deciding whether the next step is a quick prototype, an MVP to take to users, more features, or an enterprise-grade investment; shipping in small batches; knowing when to get user/stakeholder feedback vs run a technical experiment; factoring product vision, project stage, feasibility, risk, effort, budget; defining and project-managing key metrics on mature projects. This is where the MVP-vs-careful pace call lives &mdash; the tension from Ng's three loops &mdash; and it compounds into FDE pricing power.</p>
+          <div class="chips">
+            <span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; deliberate practice on real builds</span>
+            <span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">Cross-read: Ng's &ldquo;three loops&rdquo; letter (issue-359, Jun 26 2026): agentic coding loop &rarr; developer feedback loop &rarr; external feedback loop</span>
+          </div>
           </div></div>
         </div>
         <div class="node gap">
-          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4b &middot; The Three Loops <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4b &middot; Making Product Decisions <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
           <div class="nbody"><div class="ninner">
-          <p>Ng's June 2026 framework: an inner <b>agentic coding loop</b> (minutes) wrapped by a slower <b>developer feedback loop</b>, wrapped by a <b>market/customer feedback loop</b> that decides what the inner loop should even build. Your moat is owning the outer two loops, not the inner one the agent runs.</p>
-          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">Read: Ng's "three loops" letter (Jun 30 2026, The Batch)</span></div>
+          <p>Ng: &ldquo;Engineers should no longer expect to be given a pixel-perfect design and asked only to implement it.&rdquo; You will make decisions the spec doesn't cover &mdash; and when there is no spec, you know how to develop one. Product sense for real user needs; basic design sense (pleasing, not just functional); basic business sense (go-to-market, market size, unit economics, P&amp;L). Rooted in user empathy, honed deliberately: informal interviews with 2&ndash;3 users, surveys of hundreds, large-scale A/B tests, analyzing behavior at scale. This is the FDE core &mdash; you live in the client's business problem, not the code.</p>
+          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; judgment built from client work</span></div>
           </div></div>
         </div>
         <div class="node gap">
-          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4c &middot; Judgment of Pace (MVP vs careful) <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4c &middot; Communicating &amp; Leading <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
           <div class="nbody"><div class="ninner">
-          <p>Knowing when to ship a rough MVP to real users vs slow down and build carefully. The same tension as the three loops. This is the skill that compounds into seniority and into FDE pricing power.</p>
-          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; deliberate practice on real builds</span></div>
+          <p>Ng's third shaping skill: your scope expands beyond engineering into the functions around your project &mdash; marketing, finance, legal. Aligning and coordinating among stakeholders moves the project more than code does; communication is also the foundation for talking with users to hone empathy. And because everyone outside engineering is trying to understand AI's capabilities and impact, your technical judgment lets you explain what is and isn't feasible and help lead the broader organization forward.</p>
+          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; judgment built from client work</span></div>
+          </div></div>
+        </div>
+        <div class="node gap">
+          <button class="nhead" type="button" aria-expanded="false"><span class="tt">4d &middot; High-Agency Ownership <span class="tag gap">gap</span></span><span class="chev">&#9656;</span></button>
+          <div class="nbody"><div class="ninner">
+          <p>Ng's fourth shaping skill: many people &mdash; including executives &mdash; don't yet know what AI can do, which opens the door for a skilled engineer to spot problems, propose solutions, and execute without waiting for precise top-down direction (while respecting the organization's priorities and constraints). Own an initiative end-to-end: accountability for issues, acting in ambiguity, persisting through setbacks, measuring by value created not tasks completed. Plus keep investing in your own skills &mdash; track the frontier, pick up new tools, tune your workflows.</p>
+          <div class="chips"><span class="chip" style="cursor:default;border-color:var(--line);color:var(--muted)">No course &mdash; judgment built from client work</span></div>
           </div></div>
         </div>
       </div>
@@ -354,14 +367,14 @@
   <!-- CRITICAL PATH -->
   <div class="section">
     <h2>Your Critical Path (red gaps, in leverage order)</h2>
-    <p style="color:var(--muted);font-size:13.5px;margin:0 0 6px">You enter the tree already strong on 1a, 1b, 1f, 2a, 2b, 3a, 3b, 3d (green). The 10 nodes below are where you invest. Ng's own ordering inside Branch 1: get LLM foundations solid, then build the <b>evals loop before</b> you scale grounding, agents, or production complexity. The first 3 nodes here do exactly that.</p>
+    <p style="color:var(--muted);font-size:13.5px;margin:0 0 6px">You enter the tree already strong on 1a, 1b, 1f, 2a, 2b, 3a, 3b (green). The 13 nodes below are where you invest. Ng calls the disciplined evals/error-analysis loop &ldquo;the most important trait&rdquo; of an AI system builder (issue-367), so the first steps here build that loop before scaling agents and production complexity &mdash; that sequencing is ours, not Ng's; the letters themselves don't prescribe an order.</p>
     <ol class="path">
       <li><b>Evaluation-Driven Development (1d)</b><span>Ng's #1 sub-skill. Take <a href="https://www.deeplearning.ai/courses/evaluating-ai-agents">Evaluating AI Agents</a>. You have eval truth; build the loop discipline. Everything else is steerable only if this exists.</span></li>
       <li><b>Agentic Systems architecture (1c)</b><span><a href="https://www.deeplearning.ai/courses/agentic-ai">Agentic AI</a> + <a href="https://www.deeplearning.ai/courses/building-adaptive-ai-agents">Building Adaptive AI Agents</a>. Move from using agents to choosing where on the workflow&harr;harness spectrum a problem lives.</span></li>
       <li><b>Production / LLM serving (1e + 2e)</b><span>Your named MLOps gap. <a href="https://www.deeplearning.ai/courses/fast-and-efficient-llm-inference-with-vllm">vLLM</a> (you know) + observability, drift, cost/latency lever. This is the FDE moat: you can ship, not just demo.</span></li>
       <li><b>System Architecture (2c) + Security (2d)</b><span>Boundaries, failure domains, prompt-injection, sandboxing. <a href="https://www.deeplearning.ai/courses/orchestrating-workflows-for-genai-applications">Orchestrating Workflows</a> + <a href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a>.</span></li>
-      <li><b>Reviewing agent work (3c) + failure modes (3e)</b><span><a href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a> + <a href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a>. The verification half where most agent users are weak.</span></li>
-      <li><b>Shaping the build (4a&ndash;4c)</b><span>No course &mdash; this is judgment. Read the three-loops letter; deliberately own the market + developer loops on every build. This is what your FDE career is actually selling.</span></li>
+      <li><b>Reviewing agent work (3c) + customizing the environment (3d) + agent foundations (3e)</b><span><a href="https://www.deeplearning.ai/courses/ai-code-review">AI Code Review</a> + <a href="https://www.deeplearning.ai/courses/spec-driven-development-with-coding-agents">Spec-Driven Development</a> + <a href="https://www.deeplearning.ai/courses/mcp-build-rich-context-ai-apps-with-anthropic">MCP</a>. The verification-and-harness half where most agent users are weak.</span></li>
+      <li><b>Shaping the build (4a&ndash;4d)</b><span>No course &mdash; this is judgment. Drive the build loop, make product decisions, communicate and lead, own with high agency. Read the three-loops letter; deliberately own the developer and external feedback loops on every build. This is what your FDE career is actually selling.</span></li>
     </ol>
   </div>
 
@@ -371,7 +384,7 @@
     <table>
       <tr><th style="width:26%">Claim to check</th><th>Verdict against the sources</th></tr>
       <tr><td>Is the 4-branch structure real and current?</td>
-        <td><b>Yes &mdash; verified primary + 3 independent.</b> Ng published the map Aug 14 2026 (X post 2088302050706686198), with Part 1 (Aug 21, X 2090840747738374568), Part 2 software-fundamentals (Aug 28), and coding-agents (Sep 4). Corroborated by The Batch, TrueFoundry, and explainx.ai. Not a single-source rumor.</td></tr>
+        <td><b>Yes &mdash; verified primary.</b> Ng published the map in The Batch issue-366 (Aug 14 2026), with deep-dives issue-367 building &amp; deploying (Aug 21), issue-368 software fundamentals (Aug 28), issue-369 coding agents (Sep 4), and issue-370 shaping the build (Sep 11). Re-verified against the letters themselves 2026-11-13; sub-skill names in this tree are Ng's own lists. Not a single-source rumor.</td></tr>
       <tr><td>Is it grounded in evidence, not opinion?</td>
         <td><b>Yes.</b> Ng's stated method: 10,000+ job postings + structured expert/hiring-manager interviews + survey data, "akin to clustering a massive dataset." He explicitly targets skills durable "as the tooling changes underneath them" &mdash; the future-proofing you asked about is the framework's stated design goal.</td></tr>
       <tr><td>Does it match YOUR actual gap?</td>
@@ -392,9 +405,9 @@
   </div>
 
   <div class="foot">
-    <b>Sources (all checked 2026-09-10):</b>
-    Ng, "AI Engineering Skills Map" X post 2088302050706686198 (Aug 14 2026) &middot; "Building &amp; Deploying AI Applications" X 2090840747738374568 (Aug 21) &middot; "Software engineering fundamentals" X 2093388974194872781 (Aug 28) &middot; coding-agents follow-up (Sep 4) via explainx.ai.
-    DeepLearning.AI The Batch "The AI Engineering Skills Map" &middot; TrueFoundry "Andrew Ng's AI Engineering Skills Map" (Sep 1 2026) &middot; explainx.ai "4 Skills" (Aug 15) + "6 Sub-Skills" (Aug 22) + "3 Loops" (Jun 30) &middot;
+    <b>Sources (checked 2026-09-10; re-verified against the primary letters 2026-11-13):</b>
+    The Batch, DeepLearning.AI: issue-366 &ldquo;The AI Engineering Skills Map&rdquo; (Aug 14 2026) &middot; issue-367 &ldquo;Building and Deploying AI Applications in Detail&rdquo; (Aug 21) &middot; issue-368 software-fundamentals deep-dive (Aug 28) &middot; issue-369 coding-agents deep-dive (Sep 4) &middot; issue-370 &ldquo;Shaping the Build&rdquo; deep-dive (Sep 11) &middot; issue-359 &ldquo;three loops&rdquo; letter (Jun 26 2026). deeplearning.ai/the-batch/issue-36&hellip;370.
+    Also: Ng's X posts (Aug 14: 2088302050706686198; Aug 21: 2090840747738374568; Aug 28: 2093388974194872781) &middot; TrueFoundry (Sep 1 2026) &middot; explainx.ai &ldquo;4 Skills&rdquo; (Aug 15) + &ldquo;6 Sub-Skills&rdquo; (Aug 22).<br>
     Course catalog scraped live from deeplearning.ai/courses (47 short courses, 2026-09-10).
     Node status (green/red) is <b>a mapping of your profile</b>, not from Ng.
   </div>
